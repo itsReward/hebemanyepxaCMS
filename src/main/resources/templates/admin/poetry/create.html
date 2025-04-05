@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/header :: sidebar}"></div>
+
+<div class="content-wrapper">
+    <div th:replace="~{fragments/header :: topbar(${pageTitle})}"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <span>Add New Poetry</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/poetry/create}" th:object="${poetry}" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug (optional)</label>
+                    <input type="text" class="form-control" id="slug" th:field="*{slug}" placeholder="Leave blank to auto-generate">
+                    <div class="form-text">URL-friendly version of the title. If left blank, it will be generated automatically.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="publishDate" class="form-label">Publish Date</label>
+                    <input type="date" class="form-control" id="publishDate" th:field="*{publishDate}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea class="form-control" id="content" th:field="*{content}" rows="10" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="excerpt" class="form-label">Excerpt (optional)</label>
+                    <textarea class="form-control" id="excerpt" th:field="*{excerpt}" rows="3"></textarea>
+                    <div class="form-text">A short summary or excerpt to be displayed in lists.</div>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="isFeatured" th:field="*{isFeatured}">
+                    <label class="form-check-label" for="isFeatured">Featured</label>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="isPublished" th:field="*{isPublished}">
+                    <label class="form-check-label" for="isPublished">Published</label>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/admin/poetry}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Poetry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/header :: scripts}"></th:block>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#content').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+
+    // Auto-generate slug from title
+    $('#title').on('input', function() {
+        const slug = $('#slug');
+        if (!slug.val()) {
+            const titleValue = $(this).val();
+            const slugified = titleValue
+                .toLowerCase()
+                .replace(/[^\w ]+/g, '')
+                .replace(/ +/g, '-');
+            slug.val(slugified);
+        }
+    });
+</script>
+</body>
+</html>

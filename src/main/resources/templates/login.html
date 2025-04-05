@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HebeManyepxa CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo h1 {
+            font-weight: 300;
+            color: #8B5A2B;
+        }
+        .form-control:focus {
+            border-color: #CD853F;
+            box-shadow: 0 0 0 0.25rem rgba(205, 133, 63, 0.25);
+        }
+        .btn-primary {
+            background-color: #8B5A2B;
+            border-color: #8B5A2B;
+        }
+        .btn-primary:hover {
+            background-color: #CD853F;
+            border-color: #CD853F;
+        }
+        .alert {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">
+        <h1>HebeManyepxa CMS</h1>
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        Invalid username or password.
+    </div>
+
+    <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" id="username" name="username" class="form-control" required autofocus>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: sidebar}"></div>
+
+<div class="content-wrapper">
+  <div th:replace="~{fragments/header :: topbar(${pageTitle})}"></div>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>All Poetry</span>
+      <a th:href="@{/admin/poetry/create}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New
+      </a>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Publish Date</th>
+          <th>Featured</th>
+          <th>Published</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="poem : ${poetry}">
+          <td th:text="${poem.title}">Sample Poetry</td>
+          <td th:text="${#temporals.format(poem.publishDate, 'yyyy-MM-dd')}">2025-04-05</td>
+          <td>
+            <span th:if="${poem.isFeatured}" class="badge bg-success">Yes</span>
+            <span th:unless="${poem.isFeatured}" class="badge bg-secondary">No</span>
+          </td>
+          <td>
+            <span th:if="${poem.isPublished}" class="badge bg-success">Yes</span>
+            <span th:unless="${poem.isPublished}" class="badge bg-secondary">No</span>
+          </td>
+          <td>
+            <a th:href="@{/admin/poetry/edit/{id}(id=${poem.id})}" class="btn btn-sm btn-primary">
+              <i class="fas fa-edit"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                    th:data-bs-target="'#deleteModal' + ${poem.id}">
+              <i class="fas fa-trash"></i>
+            </button>
+
+            <!-- Delete Modal -->
+            <div class="modal fade" th:id="'deleteModal' + ${poem.id}" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete the poetry "<span th:text="${poem.title}"></span>"?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form th:action="@{/admin/poetry/delete/{id}(id=${poem.id})}" method="post">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr th:if="${poetry.empty}">
+          <td colspan="5" class="text-center">No poetry found</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div th:if="${poetry.totalPages > 1}" class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item" th:classappend="${poetry.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/poetry(page=0)}">&laquo;</a>
+            </li>
+            <li class="page-item" th:classappend="${poetry.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/poetry(page=${poetry.number - 1})}">&lt;</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, poetry.totalPages - 1)}"
+                th:classappend="${i == poetry.number ? 'active' : ''}">
+              <a class="page-link" th:href="@{/admin/poetry(page=${i})}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${poetry.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/poetry(page=${poetry.number + 1})}">&gt;</a>
+            </li>
+            <li class="page-item" th:classappend="${poetry.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/poetry(page=${poetry.totalPages - 1})}">&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="~{fragments/header :: scripts}"></th:block>
+</body>
+</html>

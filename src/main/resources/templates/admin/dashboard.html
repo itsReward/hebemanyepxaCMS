@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: sidebar}"></div>
+
+<div class="content-wrapper">
+    <div th:replace="~{fragments/header :: topbar(${pageTitle})}"></div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <i class="fas fa-feather-alt fa-3x text-primary mb-3"></i>
+                    <h5>Poetry</h5>
+                    <p class="display-6">12</p>
+                    <a th:href="@{/admin/poetry}" class="btn btn-sm btn-outline-primary">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <i class="fas fa-tshirt fa-3x text-success mb-3"></i>
+                    <h5>Apparel</h5>
+                    <p class="display-6">8</p>
+                    <a th:href="@{/admin/apparel}" class="btn btn-sm btn-outline-success">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <i class="fas fa-book fa-3x text-info mb-3"></i>
+                    <h5>Books</h5>
+                    <p class="display-6">15</p>
+                    <a th:href="@{/admin/books}" class="btn btn-sm btn-outline-info">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <i class="fas fa-quote-left fa-3x text-warning mb-3"></i>
+                    <h5>Quotes</h5>
+                    <p class="display-6">24</p>
+                    <a th:href="@{/admin/quotes}" class="btn btn-sm btn-outline-warning">Manage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Recent Poetry</span>
+                    <a th:href="@{/admin/poetry}" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Published</th>
+                            <th>Featured</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Sample Poetry 1</td>
+                            <td>2025-04-05</td>
+                            <td><span class="badge bg-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sample Poetry 2</td>
+                            <td>2025-04-03</td>
+                            <td><span class="badge bg-secondary">No</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sample Poetry 3</td>
+                            <td>2025-04-01</td>
+                            <td><span class="badge bg-secondary">No</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Recent Apparel</span>
+                    <a th:href="@{/admin/apparel}" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Available</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>T-Shirt Design 1</td>
+                            <td>$29.99</td>
+                            <td><span class="badge bg-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td>Hoodie Design 1</td>
+                            <td>$49.99</td>
+                            <td><span class="badge bg-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td>Cap Design 1</td>
+                            <td>$19.99</td>
+                            <td><span class="badge bg-secondary">No</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/header :: scripts}"></th:block>
+</body>
+</html>
