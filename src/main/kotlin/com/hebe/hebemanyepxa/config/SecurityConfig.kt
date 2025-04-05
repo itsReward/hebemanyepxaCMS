@@ -19,7 +19,7 @@ class SecurityConfig {
                 authorize
                     .requestMatchers("/admin/**").authenticated()
                     .requestMatchers("/api/admin/**").authenticated()
-                    .requestMatchers("/", "/login", "/api/public/**", "/assets/**", "/uploads/**", "/error").permitAll()
+                    .requestMatchers("/", "/login", "/register", "/api/public/**", "/assets/**", "/uploads/**", "/error").permitAll()
                     .anyRequest().permitAll()
             }
             .formLogin { form ->

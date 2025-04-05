@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - HebeManyepxa CMS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .register-container {
+      max-width: 500px;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .logo h1 {
+      font-weight: 300;
+      color: #8B5A2B;
+    }
+    .form-control:focus {
+      border-color: #CD853F;
+      box-shadow: 0 0 0 0.25rem rgba(205, 133, 63, 0.25);
+    }
+    .btn-primary {
+      background-color: #8B5A2B;
+      border-color: #8B5A2B;
+    }
+    .btn-primary:hover {
+      background-color: #CD853F;
+      border-color: #CD853F;
+    }
+    .alert {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+<div class="register-container">
+  <div class="logo">
+    <h1>HebeManyepxa CMS</h1>
+    <p>Create an account</p>
+  </div>
+
+  <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+    <span th:text="${errorMessage}">Error message</span>
+  </div>
+
+  <form th:action="@{/register}" th:object="${user}" method="post">
+    <div class="mb-3">
+      <label for="fullName" class="form-label">Full Name</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input type="text" id="fullName" th:field="*{fullName}" class="form-control" required autofocus>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+        <input type="text" id="username" th:field="*{username}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        <input type="email" id="email" th:field="*{email}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input type="password" id="password" th:field="*{password}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="d-grid mb-3">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+
+    <div class="text-center">
+      <p>Already have an account? <a th:href="@{/login}" class="text-decoration-none">Sign in</a></p>
+    </div>
+  </form>
+</div>
+</body>
+</html>
