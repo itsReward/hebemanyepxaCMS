@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/header :: sidebar}"></div>
+
+<div class="content-wrapper">
+    <div th:replace="~{fragments/header :: topbar(${pageTitle})}"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <span>Edit Book</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control" id="slug" th:field="*{slug}" required>
+                    <div class="form-text">URL-friendly version of the title.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="author" th:field="*{author}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="publishYear" class="form-label">Publish Year</label>
+                    <input type="number" class="form-control" id="publishYear" th:field="*{publishYear}" min="1800" max="2100">
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="6" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bookLink" class="form-label">Book Link (optional)</label>
+                    <input type="url" class="form-control" id="bookLink" th:field="*{bookLink}" placeholder="https://...">
+                    <div class="form-text">External link to purchase or read more about the book.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="coverImage" class="form-label">Cover Image</label>
+                    <div th:if="${book.coverImage}" class="mb-2">
+                        <img th:src="@{'/uploads/' + ${book.coverImage}}" alt="Book Cover" style="max-height: 150px;" class="img-thumbnail">
+                    </div>
+                    <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*">
+                    <div class="form-text">Upload a new image to replace the current one. Leave empty to keep the current image.</div>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="isFeatured" th:field="*{isFeatured}">
+                    <label class="form-check-label" for="isFeatured">Featured</label>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/admin/books}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/header :: scripts}"></th:block>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#description').summernote({
+            height: 250,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+</script>
+</body>
+</html>

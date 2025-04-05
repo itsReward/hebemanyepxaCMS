@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: sidebar}"></div>
+
+<div class="content-wrapper">
+  <div th:replace="~{fragments/header :: topbar(${pageTitle})}"></div>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>All Quotes</span>
+      <a th:href="@{/admin/quotes/create}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New
+      </a>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Quote</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Featured</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="quote : ${quotes}">
+          <td th:text="${#strings.length(quote.quote) > 50 ? #strings.substring(quote.quote, 0, 50) + '...' : quote.quote}">Sample quote text...</td>
+          <td th:text="${quote.author}">Author Name</td>
+          <td th:text="${quote.category}">Category</td>
+          <td>
+            <span th:if="${quote.isFeatured}" class="badge bg-success">Yes</span>
+            <span th:unless="${quote.isFeatured}" class="badge bg-secondary">No</span>
+          </td>
+          <td>
+            <a th:href="@{/admin/quotes/edit/{id}(id=${quote.id})}" class="btn btn-sm btn-primary">
+              <i class="fas fa-edit"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                    th:data-bs-target="'#deleteModal' + ${quote.id}">
+              <i class="fas fa-trash"></i>
+            </button>
+
+            <!-- Delete Modal -->
+            <div class="modal fade" th:id="'deleteModal' + ${quote.id}" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this quote by <span th:text="${quote.author}"></span>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form th:action="@{/admin/quotes/delete/{id}(id=${quote.id})}" method="post">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr th:if="${quotes.isEmpty()}">
+          <td colspan="5" class="text-center">No quotes found</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div th:if="${quotes.totalPages > 1}" class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item" th:classappend="${quotes.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/quotes(page=0)}">&laquo;</a>
+            </li>
+            <li class="page-item" th:classappend="${quotes.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/quotes(page=${quotes.number - 1})}">&lt;</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, quotes.totalPages - 1)}"
+                th:classappend="${i == quotes.number ? 'active' : ''}">
+              <a class="page-link" th:href="@{/admin/quotes(page=${i})}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${quotes.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/quotes(page=${quotes.number + 1})}">&gt;</a>
+            </li>
+            <li class="page-item" th:classappend="${quotes.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/quotes(page=${quotes.totalPages - 1})}">&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="~{fragments/header :: scripts}"></th:block>
+</body>
+</html>
