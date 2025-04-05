@@ -15,8 +15,4 @@ class AdminController {
         return "admin/dashboard"
     }
 
-    @GetMapping("/login")
-    fun login(): String {
-        return "login"
-    }
 }

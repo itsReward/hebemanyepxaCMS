@@ -1,3 +1,5 @@
+package com.hebe.hebemanyepxa.config
+
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -22,10 +24,10 @@ class SecurityConfig {
             }
             .formLogin { form ->
                 form
-                    .loginPage("/login")  // Explicitly set the login page
-                    .loginProcessingUrl("/login")  // URL to submit login
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/admin/dashboard")
-                    .failureUrl("/login?error=true")  // URL for authentication failure
+                    .failureUrl("/login?error=true")
                     .permitAll()
             }
             .logout { logout ->
