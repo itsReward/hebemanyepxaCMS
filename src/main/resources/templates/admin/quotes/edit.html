@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+    <th:block th:replace="~{fragments/header :: head(title=${pageTitle})}"></th:block>
 </head>
 <body>
 <div th:replace="~{fragments/header :: sidebar}"></div>

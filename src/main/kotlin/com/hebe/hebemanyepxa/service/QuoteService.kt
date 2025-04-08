@@ -51,4 +51,9 @@ class QuoteService(private val quoteRepository: QuoteRepository) {
     fun delete(id: Long) {
         quoteRepository.deleteById(id)
     }
+
+    @Transactional
+    fun count(): Long {
+        return quoteRepository.count()
+    }
 }

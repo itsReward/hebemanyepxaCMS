@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <th:block th:replace="~{fragments/header :: head(${pageTitle})}"></th:block>
+    <th:block th:replace="~{fragments/header :: head(title=${pageTitle})}"></th:block>
 </head>
 <body>
 <div th:replace="~{fragments/header :: sidebar}"></div>
@@ -15,7 +15,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-feather-alt fa-3x text-primary mb-3"></i>
                     <h5>Poetry</h5>
-                    <p class="display-6">12</p>
+                    <p class="display-6" th:text="${poetryCount}">0</p>
                     <a th:href="@{/admin/poetry}" class="btn btn-sm btn-outline-primary">Manage</a>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-tshirt fa-3x text-success mb-3"></i>
                     <h5>Apparel</h5>
-                    <p class="display-6">8</p>
+                    <p class="display-6" th:text="${apparelCount}">0</p>
                     <a th:href="@{/admin/apparel}" class="btn btn-sm btn-outline-success">Manage</a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-book fa-3x text-info mb-3"></i>
                     <h5>Books</h5>
-                    <p class="display-6">15</p>
+                    <p class="display-6" th:text="${booksCount}">0</p>
                     <a th:href="@{/admin/books}" class="btn btn-sm btn-outline-info">Manage</a>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-quote-left fa-3x text-warning mb-3"></i>
                     <h5>Quotes</h5>
-                    <p class="display-6">24</p>
+                    <p class="display-6" th:text="${quotesCount}">0</p>
                     <a th:href="@{/admin/quotes}" class="btn btn-sm btn-outline-warning">Manage</a>
                 </div>
             </div>
@@ -69,20 +69,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Sample Poetry 1</td>
-                            <td>2025-04-05</td>
-                            <td><span class="badge bg-success">Yes</span></td>
+                        <tr th:each="poem : ${recentPoetry}" th:if="${recentPoetry != null && !recentPoetry.isEmpty()}">
+                            <td th:text="${poem.title}">Sample Poetry</td>
+                            <td th:text="${#temporals.format(poem.publishDate, 'yyyy-MM-dd')}">2025-04-05</td>
+                            <td>
+                                <span th:if="${poem.isFeatured}" class="badge bg-success">Yes</span>
+                                <span th:unless="${poem.isFeatured}" class="badge bg-secondary">No</span>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Sample Poetry 2</td>
-                            <td>2025-04-03</td>
-                            <td><span class="badge bg-secondary">No</span></td>
-                        </tr>
-                        <tr>
-                            <td>Sample Poetry 3</td>
-                            <td>2025-04-01</td>
-                            <td><span class="badge bg-secondary">No</span></td>
+                        <tr th:if="${recentPoetry == null || recentPoetry.isEmpty()}">
+                            <td colspan="3" class="text-center">No poetry found</td>
                         </tr>
                         </tbody>
                     </table>
@@ -105,20 +101,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>T-Shirt Design 1</td>
-                            <td>$29.99</td>
-                            <td><span class="badge bg-success">Yes</span></td>
+                        <tr th:each="item : ${recentApparel}" th:if="${recentApparel != null && !recentApparel.isEmpty()}">
+                            <td th:text="${item.title}">T-Shirt Design</td>
+                            <td th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}">$29.99</td>
+                            <td>
+                                <span th:if="${item.isAvailable}" class="badge bg-success">Yes</span>
+                                <span th:unless="${item.isAvailable}" class="badge bg-secondary">No</span>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Hoodie Design 1</td>
-                            <td>$49.99</td>
-                            <td><span class="badge bg-success">Yes</span></td>
-                        </tr>
-                        <tr>
-                            <td>Cap Design 1</td>
-                            <td>$19.99</td>
-                            <td><span class="badge bg-secondary">No</span></td>
+                        <tr th:if="${recentApparel == null || recentApparel.isEmpty()}">
+                            <td colspan="3" class="text-center">No apparel found</td>
                         </tr>
                         </tbody>
                     </table>

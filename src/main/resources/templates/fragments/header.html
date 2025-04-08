@@ -132,22 +132,22 @@
           </a>
         </li>
         <li class="nav-item">
-          <a th:href="@{/admin/poetry}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.startsWith('/admin/poetry') ? 'active' : ''}">
+          <a th:href="@{/admin/poetry}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.equals('/admin/poetry') ? 'active' : ''}">
             <i class="fas fa-feather-alt"></i> Poetry
           </a>
         </li>
         <li class="nav-item">
-          <a th:href="@{/admin/apparel}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.startsWith('/admin/apparel') ? 'active' : ''}">
+          <a th:href="@{/admin/apparel}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.equals('/admin/apparel') ? 'active' : ''}">
             <i class="fas fa-tshirt"></i> Apparel
           </a>
         </li>
         <li class="nav-item">
-          <a th:href="@{/admin/books}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.startsWith('/admin/books') ? 'active' : ''}">
+          <a th:href="@{/admin/books}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.equals('/admin/books') ? 'active' : ''}">
             <i class="fas fa-book"></i> Books
           </a>
         </li>
         <li class="nav-item">
-          <a th:href="@{/admin/quotes}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.startsWith('/admin/quotes') ? 'active' : ''}">
+          <a th:href="@{/admin/quotes}" class="nav-link" th:classappend="${#httpServletRequest.requestURI.equals('/admin/quotes') ? 'active' : ''}">
             <i class="fas fa-quote-left"></i> Quotes
           </a>
         </li>

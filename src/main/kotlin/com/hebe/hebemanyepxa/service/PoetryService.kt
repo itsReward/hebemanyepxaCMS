@@ -83,4 +83,9 @@ class PoetryService(private val poetryRepository: PoetryRepository) {
 
         return slug
     }
+
+    @Transactional
+    fun count(): Long {
+        return poetryRepository.count()
+    }
 }

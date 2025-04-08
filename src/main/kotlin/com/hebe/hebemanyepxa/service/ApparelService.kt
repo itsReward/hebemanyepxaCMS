@@ -155,4 +155,9 @@ class ApparelService(
 
         return slug
     }
+
+    @Transactional
+    fun count(): Long {
+        return apparelRepository.count()
+    }
 }

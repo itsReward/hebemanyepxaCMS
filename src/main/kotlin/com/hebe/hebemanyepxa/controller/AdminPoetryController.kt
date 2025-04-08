@@ -2,6 +2,7 @@ package com.hebe.hebemanyepxa.controller
 
 import com.hebe.hebemanyepxa.model.Poetry
 import com.hebe.hebemanyepxa.service.PoetryService
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -18,11 +19,13 @@ class AdminPoetryController(private val poetryService: PoetryService) {
     @GetMapping
     fun list(
         @PageableDefault(size = 10, sort = ["publishDate"], direction = Sort.Direction.DESC) pageable: Pageable,
-        model: Model
+        model: Model,
+        request: HttpServletRequest
     ): String {
         val poetry = poetryService.findAll(pageable)
         model.addAttribute("poetry", poetry)
         model.addAttribute("pageTitle", "Manage Poetry")
+        model.addAttribute("request", request)
         return "admin/poetry/list"
     }
 
@@ -54,7 +57,7 @@ class AdminPoetryController(private val poetryService: PoetryService) {
     }
 
     @GetMapping("/edit/{id}")
-    fun editForm(@PathVariable id: Long, model: Model): String {
+    fun editForm(@PathVariable id: Long, model: Model, request: HttpServletRequest): String {
         val poetry = poetryService.findById(id)
         if (poetry.isEmpty) {
             return "redirect:/admin/poetry"
@@ -62,6 +65,7 @@ class AdminPoetryController(private val poetryService: PoetryService) {
 
         model.addAttribute("poetry", poetry.get())
         model.addAttribute("pageTitle", "Edit Poetry")
+        model.addAttribute("request", request)
         return "admin/poetry/edit"
     }
 

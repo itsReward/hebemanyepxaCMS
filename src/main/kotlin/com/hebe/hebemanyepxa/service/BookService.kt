@@ -106,4 +106,9 @@ class BookService(
 
         return slug
     }
+
+    @Transactional
+    fun count(): Long {
+        return bookRepository.count()
+    }
 }
