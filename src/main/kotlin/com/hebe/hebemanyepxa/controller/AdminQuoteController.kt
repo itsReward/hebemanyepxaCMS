@@ -1,5 +1,6 @@
 package com.hebe.hebemanyepxa.controller
 
+import com.hebe.hebemanyepxa.dto.QuoteFormDto
 import com.hebe.hebemanyepxa.model.Quote
 import com.hebe.hebemanyepxa.service.QuoteService
 import org.springframework.data.domain.Pageable
@@ -27,17 +28,14 @@ class AdminQuoteController(private val quoteService: QuoteService) {
 
     @GetMapping("/create")
     fun createForm(model: Model): String {
-        model.addAttribute("quote", Quote(
-            quote = "",
-            author = ""
-        ))
+        model.addAttribute("quoteForm", QuoteFormDto())
         model.addAttribute("pageTitle", "Add New Quote")
         return "admin/quotes/create"
     }
 
     @PostMapping("/create")
     fun create(
-        @ModelAttribute quote: Quote,
+        @ModelAttribute quoteForm: QuoteFormDto,
         bindingResult: BindingResult,
         model: Model
     ): String {
@@ -46,18 +44,35 @@ class AdminQuoteController(private val quoteService: QuoteService) {
             return "admin/quotes/create"
         }
 
+        // Convert DTO to entity and save
+        val quote = Quote(
+            quote = quoteForm.quoteText,
+            author = quoteForm.author,
+            category = quoteForm.category,
+            isFeatured = quoteForm.isFeatured
+        )
         quoteService.create(quote)
         return "redirect:/admin/quotes"
     }
 
     @GetMapping("/edit/{id}")
     fun editForm(@PathVariable id: Long, model: Model): String {
-        val quote = quoteService.findById(id)
-        if (quote.isEmpty) {
+        val quoteOptional = quoteService.findById(id)
+        if (quoteOptional.isEmpty) {
             return "redirect:/admin/quotes"
         }
 
-        model.addAttribute("quote", quote.get())
+        val quote = quoteOptional.get()
+        // Convert entity to DTO
+        val quoteForm = QuoteFormDto(
+            id = quote.id,
+            quoteText = quote.quote,
+            author = quote.author,
+            category = quote.category,
+            isFeatured = quote.isFeatured
+        )
+
+        model.addAttribute("quoteForm", quoteForm)
         model.addAttribute("pageTitle", "Edit Quote")
         return "admin/quotes/edit"
     }
@@ -65,7 +80,7 @@ class AdminQuoteController(private val quoteService: QuoteService) {
     @PostMapping("/edit/{id}")
     fun edit(
         @PathVariable id: Long,
-        @ModelAttribute quote: Quote,
+        @ModelAttribute quoteForm: QuoteFormDto,
         bindingResult: BindingResult,
         model: Model
     ): String {
@@ -74,6 +89,14 @@ class AdminQuoteController(private val quoteService: QuoteService) {
             return "admin/quotes/edit"
         }
 
+        // Convert DTO to entity
+        val quote = Quote(
+            id = id,
+            quote = quoteForm.quoteText,
+            author = quoteForm.author,
+            category = quoteForm.category,
+            isFeatured = quoteForm.isFeatured
+        )
         quoteService.update(id, quote)
         return "redirect:/admin/quotes"
     }

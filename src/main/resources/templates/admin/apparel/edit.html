@@ -54,9 +54,9 @@
             <span>Edit Apparel</span>
         </div>
         <div class="card-body">
-            <form th:action="@{/admin/apparel/edit/{id}(id=${apparel.id})}" th:object="${apparel}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/apparel/edit/{id}(id=${apparelId})}" th:object="${apparelForm}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}">
-                
+
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="title" th:field="*{title}" required>
@@ -80,17 +80,17 @@
 
                 <div class="mb-4">
                     <label class="form-label">Current Images</label>
-                    <div th:if="${!apparel.images.empty}" class="image-grid">
+                    <div th:if="${!apparel.images.isEmpty()}" class="image-grid">
                         <div th:each="image : ${apparel.images}" class="image-card">
                             <img th:src="@{'/uploads/' + ${image.filePath}}" alt="Product Image">
                             <span th:if="${image.isPrimary}" class="primary-badge">Primary</span>
                             <div class="image-actions">
-                                <form th:if="${!image.isPrimary}" th:action="@{/admin/apparel/image/{apparelId}/primary/{imageId}(apparelId=${apparel.id},imageId=${image.id})}" method="post">
+                                <form th:if="${!image.isPrimary}" th:action="@{/admin/apparel/image/{apparelId}/primary/{imageId}(apparelId=${apparelId},imageId=${image.id})}" method="post">
                                     <button type="submit" class="btn btn-sm btn-outline-warning" title="Set as Primary">
                                         <i class="fas fa-star"></i>
                                     </button>
                                 </form>
-                                <form th:action="@{/admin/apparel/image/{apparelId}/delete/{imageId}(apparelId=${apparel.id},imageId=${image.id})}" method="post">
+                                <form th:action="@{/admin/apparel/image/{apparelId}/delete/{imageId}(apparelId=${apparelId},imageId=${image.id})}" method="post">
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Image">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    <div th:if="${apparel.images.empty}" class="alert alert-info">
+                    <div th:if="${apparel.images.isEmpty()}" class="alert alert-info">
                         No images uploaded yet. Upload at least one image below.
                     </div>
                 </div>

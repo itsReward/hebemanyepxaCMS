@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{public/fragments :: head('Poetry')}"></th:block>
+    <style>
+        .poetry-extended {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .poetry-intro {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .poetry-grid-extended {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .poetry-card-extended {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .poetry-card-extended:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .poetry-content-extended {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .poetry-date {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .poetry-content-extended h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .poetry-content-extended .excerpt {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .read-more {
+            align-self: flex-start;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            margin-top: auto;
+        }
+
+        .read-more::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .read-more:hover::after {
+            width: 100%;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .pagination-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-item:hover,
+        .pagination-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-dots {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+        }
+
+        .pagination-next {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            height: 40px;
+            margin-left: 10px;
+            border-radius: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-next i {
+            margin-left: 8px;
+        }
+
+        .pagination-next:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{public/fragments :: header('poetry')}"></div>
+
+<!-- Page Banner -->
+<div th:replace="~{public/fragments :: page-banner('My Poetry')}"></div>
+
+<!-- Poetry Section -->
+<section class="poetry-extended">
+    <div class="container">
+        <div class="poetry-intro" data-aos="fade-up" data-aos-duration="800">
+            <p>Welcome to my poetic world, where I explore emotions, experiences, and reflections through verse. Each poem is a glimpse into my soul, a moment captured in words.</p>
+        </div>
+
+        <div class="poetry-grid-extended" id="poetry-container">
+            <!-- Poetry items loaded from database -->
+            <div th:each="poem : ${poetry.content}" class="poetry-card-extended" data-aos="fade-up" data-aos-duration="800">
+                <div class="poetry-content-extended">
+                    <span class="poetry-date" th:text="${#temporals.format(poem.publishDate, 'MMMM d, yyyy')}">April 1, 2025</span>
+                    <h3 th:text="${poem.title}">Poem Title</h3>
+                    <p class="excerpt" th:text="${poem.excerpt != null ? poem.excerpt : #strings.substring(#strings.replace(poem.content,'<br>','\n'), 0, 150) + '...'}">
+                        Poem excerpt or beginning...
+                    </p>
+                    <a th:href="@{/poetry/{slug}(slug=${poem.slug})}" class="read-more">Read Full Poem</a>
+                </div>
+            </div>
+
+            <!-- Display message if no poems -->
+            <div th:if="${poetry.isEmpty()}" class="poetry-card-extended">
+                <div class="poetry-content-extended">
+                    <h3>No poems found</h3>
+                    <p class="excerpt">Check back soon for new poetry content.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div th:if="${poetry.totalPages > 1}" class="pagination" data-aos="fade-up" data-aos-duration="800">
+            <a th:href="@{/poetry(page=0)}" class="pagination-item" th:class="${currentPage == 0} ? 'pagination-item active' : 'pagination-item'">&laquo;</a>
+
+            <!-- Previous page link -->
+            <a th:if="${currentPage > 0}" th:href="@{/poetry(page=${currentPage - 1})}" class="pagination-item">&lt;</a>
+
+            <!-- Page numbers -->
+            <th:block th:each="i : ${#numbers.sequence(0, poetry.totalPages - 1)}">
+                <!-- Show 5 pages around current page -->
+                <a th:if="${i == 0 || i == poetry.totalPages - 1 || (i >= currentPage - 2 && i <= currentPage + 2)}"
+                   th:href="@{/poetry(page=${i})}"
+                   th:text="${i + 1}"
+                   th:class="${currentPage == i} ? 'pagination-item active' : 'pagination-item'">1</a>
+
+                <!-- Dots for skipped pages -->
+                <span th:if="${i == 1 && currentPage > 3}" class="pagination-dots">...</span>
+                <span th:if="${i == poetry.totalPages - 2 && currentPage < poetry.totalPages - 4}" class="pagination-dots">...</span>
+            </th:block>
+
+            <!-- Next page link -->
+            <a th:if="${currentPage < poetry.totalPages - 1}" th:href="@{/poetry(page=${currentPage + 1})}" class="pagination-item">&gt;</a>
+
+            <!-- Last page link -->
+            <a th:href="@{/poetry(page=${poetry.totalPages - 1})}" class="pagination-item" th:class="${currentPage == poetry.totalPages - 1} ? 'pagination-item active' : 'pagination-item'">&raquo;</a>
+
+            <!-- Next page button -->
+            <a th:if="${currentPage < poetry.totalPages - 1}" th:href="@{/poetry(page=${currentPage + 1})}" class="pagination-next">
+                Next <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Subscribe Section -->
+<section class="blog-subscribe">
+    <div class="container">
+        <div class="subscribe-card" data-aos="fade-up" data-aos-duration="800">
+            <div class="subscribe-content">
+                <h2>Get Poetry In Your Inbox</h2>
+                <p>Subscribe to receive my latest poems and creative musings delivered directly to your inbox.</p>
+            </div>
+            <div class="subscribe-form">
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{public/fragments :: footer}"></div>
+
+<!-- Scripts -->
+<div th:replace="~{public/fragments :: scripts}"></div>
+</body>
+</html>

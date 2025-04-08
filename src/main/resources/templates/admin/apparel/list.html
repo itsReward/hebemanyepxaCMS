@@ -29,12 +29,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${apparel}">
+        <tr th:each="item : ${apparelItems}">
           <td>
-            <img th:if="${!item.images.isEmpty()}"
-                 th:src="@{'/uploads/' + ${item.images.stream().filter(img -> img.isPrimary).findFirst().orElse(item.images.get(0)).filePath}}"
+            <img th:if="${item.primaryImagePath != null}"
+                 th:src="@{'/uploads/' + ${item.primaryImagePath}}"
                  alt="Apparel Image" style="max-height: 50px;">
-            <span th:if="${item.images.empty}" class="badge bg-secondary">No Image</span>
+            <span th:if="${item.primaryImagePath == null}" class="badge bg-secondary">No Image</span>
           </td>
           <td th:text="${item.title}">Sample Apparel</td>
           <td th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}">$29.99</td>
@@ -77,30 +77,30 @@
             </div>
           </td>
         </tr>
-        <tr th:if="${apparel.empty}">
+        <tr th:if="${apparelItems.isEmpty()}">
           <td colspan="6" class="text-center">No apparel items found</td>
         </tr>
         </tbody>
       </table>
 
-      <div th:if="${apparel.totalPages > 1}" class="d-flex justify-content-center mt-4">
+      <div th:if="${apparelPage.totalPages > 1}" class="d-flex justify-content-center mt-4">
         <nav>
           <ul class="pagination">
-            <li class="page-item" th:classappend="${apparel.first ? 'disabled' : ''}">
+            <li class="page-item" th:classappend="${apparelPage.first ? 'disabled' : ''}">
               <a class="page-link" th:href="@{/admin/apparel(page=0)}">&laquo;</a>
             </li>
-            <li class="page-item" th:classappend="${apparel.first ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/apparel(page=${apparel.number - 1})}">&lt;</a>
+            <li class="page-item" th:classappend="${apparelPage.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/apparel(page=${apparelPage.number - 1})}">&lt;</a>
             </li>
-            <li class="page-item" th:each="i : ${#numbers.sequence(0, apparel.totalPages - 1)}"
-                th:classappend="${i == apparel.number ? 'active' : ''}">
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, apparelPage.totalPages - 1)}"
+                th:classappend="${i == apparelPage.number ? 'active' : ''}">
               <a class="page-link" th:href="@{/admin/apparel(page=${i})}" th:text="${i + 1}">1</a>
             </li>
-            <li class="page-item" th:classappend="${apparel.last ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/apparel(page=${apparel.number + 1})}">&gt;</a>
+            <li class="page-item" th:classappend="${apparelPage.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/apparel(page=${apparelPage.number + 1})}">&gt;</a>
             </li>
-            <li class="page-item" th:classappend="${apparel.last ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/apparel(page=${apparel.totalPages - 1})}">&raquo;</a>
+            <li class="page-item" th:classappend="${apparelPage.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/apparel(page=${apparelPage.totalPages - 1})}">&raquo;</a>
             </li>
           </ul>
         </nav>

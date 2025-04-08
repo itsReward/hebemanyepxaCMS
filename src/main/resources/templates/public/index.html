@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{public/fragments :: head('Home')}"></th:block>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{public/fragments :: header('home')}"></div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-pattern"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="animate__animated animate__fadeInDown">Welcome to Hebe's World</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s" style="text-align: center; margin-left: auto; margin-right: auto;">Get to know me, what I like and what I'm about</p>
+            <a href="#about" class="btn animate__animated animate__fadeInUp animate__delay-2s">About</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-inner">
+            <div class="about-img" data-aos="fade-right" data-aos-duration="1000">
+                <img th:src="@{/assets/images/author-photo.jpg}" alt="Hebe Manyepxa">
+            </div>
+            <div class="about-content" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <h2 class="section-title">About Me</h2>
+                <p>I feel deeply—both for myself and for others. Writing is not an escape; it is where my soul lays it all down. The unsaid pain, the unshared joys, the whispers of my heart that the world may never hear. My emotions find a home in every word, and my truth flows freely between the lines. The scent of ink soothes me. Paper listens attentively. Writing is where I unravel, where my thoughts take shape, where my heart finds comfort behind, in between the lines, and inside the stories I tell.</p>
+                <p>It is where I make sense of the world and where the world, in turn, makes sense of me. My words are not just stories or verses—they are echoes of all that I am, all that I have felt, and all that I have yet to understand. Each page holds a fragment of my soul, each sentence a reflection of my journey.</p>
+                <p>Writing does not merely capture moments; it breathes life into them, allowing me to relive, release, and reconcile with my deepest emotions. It is my sanctuary, my reckoning, my voice when silence takes hold. And as I share my words, I hope they serve as a bridge for others to connect with their own hearts</p>
+                <p>—to find solace, understanding, and courage in the stories that bind us all together.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Books Section -->
+<section class="books" id="books" th:if="${!featuredBooks.isEmpty()}">
+    <div class="books-pattern"></div>
+    <div class="container">
+        <h2 class="section-title">Favorite Books</h2>
+        <div class="books-grid">
+            <!-- Featured Books from CMS -->
+            <div th:each="book : ${featuredBooks}" class="book-card" data-aos="fade-up" data-aos-duration="800" th:data-aos-delay="${bookStat.index * 200}">
+                <div class="book-img">
+                    <img th:if="${book.coverImage != null}" th:src="@{'/uploads/' + ${book.coverImage}}" th:alt="${book.title}">
+                    <img th:unless="${book.coverImage != null}" th:src="@{/assets/images/books/book-placeholder.jpg}" th:alt="${book.title}">
+                </div>
+                <div class="book-info">
+                    <h3 th:text="${book.title}">Book Title</h3>
+                    <p th:text="${#strings.length(book.description) > 150 ? #strings.substring(book.description, 0, 150) + '...' : book.description}">Book description excerpt...</p>
+                    <a th:if="${book.bookLink != null}" th:href="${book.bookLink}" class="book-link" target="_blank">Read Review</a>
+                    <a th:unless="${book.bookLink != null}" th:href="@{/books/{slug}(slug=${book.slug})}" class="book-link">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Poetry Section -->
+<section class="poetry-featured" th:if="${!featuredPoetry.isEmpty()}" style="padding: 100px 0; background-color: var(--light-color);">
+    <div class="container">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 50px;">Featured Poetry</h2>
+
+        <div class="poetry-grid-featured" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;">
+            <div th:each="poem : ${featuredPoetry}" class="poetry-card-featured" data-aos="fade-up" data-aos-duration="800" th:data-aos-delay="${poemStat.index * 200}" style="background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); padding: 30px; display: flex; flex-direction: column; height: 100%;">
+                <span class="poetry-date" th:text="${#temporals.format(poem.publishDate, 'MMMM d, yyyy')}" style="font-family: 'Poppins', sans-serif; font-size: 0.8rem; color: var(--accent-color); margin-bottom: 10px;">April 1, 2025</span>
+                <h3 th:text="${poem.title}" style="font-size: 1.5rem; margin-bottom: 20px; color: var(--primary-color);">Poem Title</h3>
+                <p class="excerpt" th:text="${poem.excerpt != null ? poem.excerpt : #strings.substring(#strings.replace(poem.content,'<br>','\n'), 0, 150) + '...'}" style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.8; flex: 1;">
+                    Poem excerpt...
+                </p>
+                <a th:href="@{/poetry/{slug}(slug=${poem.slug})}" class="read-more" style="align-self: flex-start; font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 0.9rem; color: var(--primary-color); text-decoration: none; position: relative; margin-top: auto;">Read Full Poem</a>
+            </div>
+        </div>
+
+        <div class="text-center" style="text-align: center; margin-top: 40px;">
+            <a th:href="@{/poetry}" class="btn" style="display: inline-block; padding: 12px 30px; background-color: var(--accent-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border: 2px solid var(--accent-color);">
+                Explore All Poetry
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Quotes Section -->
+<section class="quotes" id="quotes" th:if="${!featuredQuotes.isEmpty()}">
+    <div class="container">
+        <h2 class="section-title">Favorite Quotes</h2>
+        <div class="quotes-container">
+            <!-- Featured Quotes from CMS -->
+            <div th:each="quote : ${featuredQuotes}" class="quote-card" data-aos="fade-up" data-aos-duration="800" th:data-aos-delay="${quoteStat.index * 200}">
+                <div class="quote-mark">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="quote-content">
+                    <p th:text="${quote.quote}">Quote text goes here...</p>
+                    <div class="quote-author">
+                        <span th:text="${'- ' + quote.author}">- Author Name</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center" style="text-align: center; margin-top: 40px;">
+            <a th:href="@{/quotes}" class="btn" style="display: inline-block; padding: 12px 30px; background-color: var(--accent-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border: 2px solid var(--accent-color);">
+                View All Quotes
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Apparel Section -->
+<section class="apparel-featured" th:if="${!featuredApparel.isEmpty()}" style="padding: 100px 0; background-color: var(--secondary-color); position: relative; overflow: hidden;">
+    <div class="container">
+        <h2 class="section-title" style="text-align: center; color: var(--dark-color); margin-bottom: 50px;">Featured Apparel</h2>
+
+        <div class="apparel-grid-featured" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px;">
+            <div th:each="item : ${featuredApparel}" class="apparel-card" data-aos="fade-up" data-aos-duration="800" th:data-aos-delay="${itemStat.index * 200}">
+                <div class="apparel-img">
+
+                    <img th:if="${!item.images.isEmpty()}"
+                         th:src="@{'/uploads/' + ${imageHelper.getPrimaryImagePath(item.images)}}"
+                         alt="Apparel Image">
+                    <img th:if="${item.images.isEmpty()}"
+                         th:src="@{/assets/images/apparel-placeholder.jpg}"
+                         alt="No Image Available">
+
+                </div>
+                <div class="apparel-info">
+                    <h3 th:text="${item.title}">Apparel Title</h3>
+                    <div class="apparel-price" th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}" style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">$29.99</div>
+                    <a th:href="@{/apparel/{slug}(slug=${item.slug})}" class="apparel-link">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center" style="text-align: center; margin-top: 40px;">
+            <a th:href="@{/apparel}" class="btn" style="display: inline-block; padding: 12px 30px; background-color: var(--dark-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border: 2px solid var(--dark-color);">
+                Shop All Apparel
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="contact-inner">
+            <div class="contact-info" data-aos="fade-right" data-aos-duration="1000">
+                <h2 class="section-title">Get In Touch</h2>
+                <p>I'd love to hear from you! Whether you're interested in my writing, have questions about my work, or just want to connect, please don't hesitate to reach out.</p>
+                <ul class="contact-list">
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>hi@hebemanyepxa.com</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>+263 123 456 7890</span>
+                    </li>
+                </ul>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-goodreads-g"></i></a>
+                </div>
+            </div>
+            <div class="contact-form" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{public/fragments :: footer}"></div>
+
+<!-- Scripts -->
+<div th:replace="~{public/fragments :: scripts}"></div>
+</body>
+</html>

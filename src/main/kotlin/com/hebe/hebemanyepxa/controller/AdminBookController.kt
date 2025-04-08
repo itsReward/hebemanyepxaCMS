@@ -1,5 +1,7 @@
 package com.hebe.hebemanyepxa.controller
 
+import com.hebe.hebemanyepxa.dto.BookFormDto
+import com.hebe.hebemanyepxa.dto.BookListDto
 import com.hebe.hebemanyepxa.model.Book
 import com.hebe.hebemanyepxa.service.BookService
 import org.springframework.data.domain.Pageable
@@ -20,27 +22,36 @@ class AdminBookController(private val bookService: BookService) {
         @PageableDefault(size = 10, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable,
         model: Model
     ): String {
-        val books = bookService.findAll(pageable)
-        model.addAttribute("books", books)
+        val booksPage = bookService.findAll(pageable)
+
+        // Convert to DTOs
+        val bookListDtos = booksPage.map { book ->
+            BookListDto(
+                id = book.id,
+                title = book.title,
+                author = book.author,
+                publishYear = book.publishYear,
+                isFeatured = book.isFeatured,
+                coverImagePath = book.coverImage
+            )
+        }
+
+        model.addAttribute("books", bookListDtos)
+        model.addAttribute("booksPage", booksPage) // Keep for pagination
         model.addAttribute("pageTitle", "Manage Books")
         return "admin/books/list"
     }
 
     @GetMapping("/create")
     fun createForm(model: Model): String {
-        model.addAttribute("book", Book(
-            title = "",
-            slug = "",
-            description = "",
-            author = ""
-        ))
+        model.addAttribute("bookForm", BookFormDto())
         model.addAttribute("pageTitle", "Add New Book")
         return "admin/books/create"
     }
 
     @PostMapping("/create")
     fun create(
-        @ModelAttribute book: Book,
+        @ModelAttribute bookForm: BookFormDto,
         bindingResult: BindingResult,
         @RequestParam("coverImage") coverImage: MultipartFile?,
         model: Model
@@ -50,18 +61,44 @@ class AdminBookController(private val bookService: BookService) {
             return "admin/books/create"
         }
 
+        // Convert DTO to entity
+        val book = Book(
+            title = bookForm.title,
+            slug = bookForm.slug,
+            description = bookForm.description,
+            author = bookForm.author,
+            publishYear = bookForm.publishYear,
+            bookLink = bookForm.bookLink,
+            isFeatured = bookForm.isFeatured
+        )
+
         bookService.create(book, coverImage)
         return "redirect:/admin/books"
     }
 
     @GetMapping("/edit/{id}")
     fun editForm(@PathVariable id: Long, model: Model): String {
-        val book = bookService.findById(id)
-        if (book.isEmpty) {
+        val bookOptional = bookService.findById(id)
+        if (bookOptional.isEmpty) {
             return "redirect:/admin/books"
         }
 
-        model.addAttribute("book", book.get())
+        val book = bookOptional.get()
+        // Convert entity to DTO
+        val bookForm = BookFormDto(
+            id = book.id,
+            title = book.title,
+            slug = book.slug,
+            description = book.description,
+            author = book.author,
+            publishYear = book.publishYear,
+            bookLink = book.bookLink,
+            isFeatured = book.isFeatured
+        )
+
+        model.addAttribute("bookForm", bookForm)
+        model.addAttribute("book", book) // Keep for displaying cover image
+        model.addAttribute("bookId", id)
         model.addAttribute("pageTitle", "Edit Book")
         return "admin/books/edit"
     }
@@ -69,7 +106,7 @@ class AdminBookController(private val bookService: BookService) {
     @PostMapping("/edit/{id}")
     fun edit(
         @PathVariable id: Long,
-        @ModelAttribute book: Book,
+        @ModelAttribute bookForm: BookFormDto,
         bindingResult: BindingResult,
         @RequestParam("coverImage") coverImage: MultipartFile?,
         model: Model
@@ -78,6 +115,18 @@ class AdminBookController(private val bookService: BookService) {
             model.addAttribute("pageTitle", "Edit Book")
             return "admin/books/edit"
         }
+
+        // Convert DTO to entity
+        val book = Book(
+            id = id,
+            title = bookForm.title,
+            slug = bookForm.slug,
+            description = bookForm.description,
+            author = bookForm.author,
+            publishYear = bookForm.publishYear,
+            bookLink = bookForm.bookLink,
+            isFeatured = bookForm.isFeatured
+        )
 
         bookService.update(id, book, coverImage)
         return "redirect:/admin/books"

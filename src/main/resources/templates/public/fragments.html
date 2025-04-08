@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:fragment="head(title)">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title} + ' | Hebe Manyepxa'">Hebe Manyepxa</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&family=Playfair+Display:ital@0;1&family=Dancing+Script&display=swap" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+        <link rel="icon" th:href="@{/assets/favicon.ico}">
+    </th:block>
+</head>
+<body>
+<!-- Header Fragment -->
+<header th:fragment="header(active)" th:class="${active == 'home'} ? '' : 'scrolled'">
+    <div class="container">
+        <nav>
+            <a th:href="@{/}" class="logo">Hebe Manyepxa</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" th:class="${active == 'home'} ? 'active' : ''">Home</a></li>
+                <li><a th:href="@{/about}" th:class="${active == 'about'} ? 'active' : ''">About</a></li>
+                <li><a th:href="@{/books}" th:class="${active == 'books'} ? 'active' : ''">Books</a></li>
+                <li><a th:href="@{/poetry}" th:class="${active == 'poetry'} ? 'active' : ''">Poetry</a></li>
+                <li><a th:href="@{/quotes}" th:class="${active == 'quotes'} ? 'active' : ''">Quotes</a></li>
+                <li><a th:href="@{/apparel}" th:class="${active == 'apparel'} ? 'active' : ''">Apparel</a></li>
+                <li><a th:href="@{/blog}" th:class="${active == 'blog'} ? 'active' : ''">Blog</a></li>
+                <li><a th:href="@{/contact}" th:class="${active == 'contact'} ? 'active' : ''">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Page Banner Fragment -->
+<section th:fragment="page-banner(title)" class="page-banner">
+    <div class="container">
+        <h1 th:text="${title}">Page Title</h1>
+    </div>
+</section>
+
+<!-- Footer Fragment -->
+<footer th:fragment="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Hebe Manyepxa</h3>
+                <p>Contemporary writer and poet exploring themes of identity, culture, and human connection through various creative expressions.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/about}">About</a></li>
+                    <li><a th:href="@{/books}">Books</a></li>
+                    <li><a th:href="@{/poetry}">Poetry</a></li>
+                    <li><a th:href="@{/quotes}">Quotes</a></li>
+                    <li><a th:href="@{/apparel}">Apparel</a></li>
+                    <li><a th:href="@{/blog}">Blog</a></li>
+                    <li><a th:href="@{/contact}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Favorite Books</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/books/americanah}">Americanah</a></li>
+                    <li><a th:href="@{/books/masnavi}">Masnavi</a></li>
+                    <li><a th:href="@{/books/the-great-gatsby}">The Great Gatsby</a></li>
+                    <li><a th:href="@{/books/the-seven-story-mountain}">The Seven Story Mountain</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to my newsletter for updates on new poems, releases, events, and exclusive content.</p>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Hebe Manyepxa. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts Fragment -->
+<th:block th:fragment="scripts">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease',
+                once: true,
+                offset: 100
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

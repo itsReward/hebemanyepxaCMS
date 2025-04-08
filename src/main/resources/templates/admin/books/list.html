@@ -20,6 +20,7 @@
       <table class="table table-striped">
         <thead>
         <tr>
+          <th>Cover</th>
           <th>Title</th>
           <th>Author</th>
           <th>Year</th>
@@ -29,6 +30,12 @@
         </thead>
         <tbody>
         <tr th:each="book : ${books}">
+          <td>
+            <img th:if="${book.coverImagePath != null}"
+                 th:src="@{'/uploads/' + ${book.coverImagePath}}"
+                 alt="Book Cover" style="max-height: 50px;">
+            <span th:if="${book.coverImagePath == null}" class="badge bg-secondary">No Cover</span>
+          </td>
           <td th:text="${book.title}">Sample Book</td>
           <td th:text="${book.author}">Sample Author</td>
           <td th:text="${book.publishYear}">2025</td>
@@ -68,29 +75,29 @@
           </td>
         </tr>
         <tr th:if="${books.isEmpty()}">
-          <td colspan="5" class="text-center">No books found</td>
+          <td colspan="6" class="text-center">No books found</td>
         </tr>
         </tbody>
       </table>
 
-      <div th:if="${books.totalPages > 1}" class="d-flex justify-content-center mt-4">
+      <div th:if="${booksPage.totalPages > 1}" class="d-flex justify-content-center mt-4">
         <nav>
           <ul class="pagination">
-            <li class="page-item" th:classappend="${books.first ? 'disabled' : ''}">
+            <li class="page-item" th:classappend="${booksPage.first ? 'disabled' : ''}">
               <a class="page-link" th:href="@{/admin/books(page=0)}">&laquo;</a>
             </li>
-            <li class="page-item" th:classappend="${books.first ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/books(page=${books.number - 1})}">&lt;</a>
+            <li class="page-item" th:classappend="${booksPage.first ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/books(page=${booksPage.number - 1})}">&lt;</a>
             </li>
-            <li class="page-item" th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
-                th:classappend="${i == books.number ? 'active' : ''}">
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, booksPage.totalPages - 1)}"
+                th:classappend="${i == booksPage.number ? 'active' : ''}">
               <a class="page-link" th:href="@{/admin/books(page=${i})}" th:text="${i + 1}">1</a>
             </li>
-            <li class="page-item" th:classappend="${books.last ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/books(page=${books.number + 1})}">&gt;</a>
+            <li class="page-item" th:classappend="${booksPage.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/books(page=${booksPage.number + 1})}">&gt;</a>
             </li>
-            <li class="page-item" th:classappend="${books.last ? 'disabled' : ''}">
-              <a class="page-link" th:href="@{/admin/books(page=${books.totalPages - 1})}">&raquo;</a>
+            <li class="page-item" th:classappend="${booksPage.last ? 'disabled' : ''}">
+              <a class="page-link" th:href="@{/admin/books(page=${booksPage.totalPages - 1})}">&raquo;</a>
             </li>
           </ul>
         </nav>

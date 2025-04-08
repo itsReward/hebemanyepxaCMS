@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{public/fragments :: head('Favorite Books')}"></th:block>
+    <style>
+        .books-extended {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .books-intro {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .books-grid-extended {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .book-card-extended {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-card-extended:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-img {
+            flex: 0 0 300px;
+            overflow: hidden;
+        }
+
+        .book-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .book-card-extended:hover .book-img img {
+            transform: scale(1.05);
+        }
+
+        .book-info-extended {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-info-extended h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .book-author {
+            color: var(--accent-color);
+        }
+
+        .book-year {
+            color: var(--dark-color);
+            opacity: 0.7;
+        }
+
+        .book-info-extended p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .book-link {
+            margin-top: auto;
+            align-self: flex-start;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .book-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .book-link:hover::after {
+            width: 100%;
+        }
+
+        .reading-recommendations {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .recommendation-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .recommendation-card ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .recommendation-card li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .recommendation-card li::before {
+            content: '\f02e';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .book-card-extended {
+                flex-direction: column;
+            }
+
+            .book-img {
+                flex: 0 0 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{public/fragments :: header('books')}"></div>
+
+<!-- Page Banner -->
+<div th:replace="~{public/fragments :: page-banner('Favorite Books')}"></div>
+
+<!-- Books Section -->
+<section class="books-extended">
+    <div class="container">
+        <div class="books-intro" data-aos="fade-up" data-aos-duration="800">
+            <p>Here are some of my favorite literary works that have shaped my understanding of storytelling and inspired my own writing journey. These books represent the rich tapestry of literature and its global impact.</p>
+        </div>
+
+        <div class="books-grid-extended">
+            <!-- Books from CMS -->
+            <div th:each="book : ${books.content}" class="book-card-extended" data-aos="fade-up" data-aos-duration="800">
+                <div class="book-img">
+                    <img th:if="${book.coverImage != null}" th:src="@{'/uploads/' + ${book.coverImage}}" th:alt="${book.title}">
+                    <img th:unless="${book.coverImage != null}" th:src="@{/assets/images/books/book-placeholder.jpg}" th:alt="${book.title}">
+                </div>
+                <div class="book-info-extended">
+                    <h3 th:text="${book.title}">Book Title</h3>
+                    <div class="book-meta">
+                        <span class="book-author" th:text="${book.author}">Author Name</span>
+                        <span class="book-year" th:if="${book.publishYear != null}" th:text="${book.publishYear}">2025</span>
+                    </div>
+                    <p th:utext="${book.description}">Book description goes here...</p>
+                    <a th:if="${book.bookLink != null}" th:href="${book.bookLink}" class="book-link" target="_blank">Read Review</a>
+                    <a th:unless="${book.bookLink != null}" th:href="@{/books/{slug}(slug=${book.slug})}" class="book-link">Read More</a>
+                </div>
+            </div>
+
+            <!-- Display message if no books -->
+            <div th:if="${books.isEmpty()}" style="text-align: center; padding: 50px;">
+                <h3>No books found</h3>
+                <p>Check back soon for book recommendations.</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div th:if="${books.totalPages > 1}" class="pagination" style="display: flex; justify-content: center; margin-top: 50px;" data-aos="fade-up" data-aos-duration="800">
+            <a th:href="@{/books(page=0)}" class="pagination-item" th:class="${books.number == 0} ? 'pagination-item active' : 'pagination-item'" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: 0 5px; border-radius: 50%; background-color: white; color: var(--dark-color); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">&laquo;</a>
+
+            <th:block th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}">
+                <a th:if="${i == 0 || i == books.totalPages - 1 || (i >= books.number - 2 && i <= books.number + 2)}"
+                   th:href="@{/books(page=${i})}"
+                   th:text="${i + 1}"
+                   th:class="${books.number == i} ? 'pagination-item active' : 'pagination-item'"
+                   style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: 0 5px; border-radius: 50%; background-color: white; color: var(--dark-color); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">1</a>
+
+                <span th:if="${i == 1 && books.number > 3}" style="display: inline-flex; align-items: center; justify-content: center; margin: 0 5px;">...</span>
+                <span th:if="${i == books.totalPages - 2 && books.number < books.totalPages - 4}" style="display: inline-flex; align-items: center; justify-content: center; margin: 0 5px;">...</span>
+            </th:block>
+
+            <a th:href="@{/books(page=${books.totalPages - 1})}" class="pagination-item" th:class="${books.number == books.totalPages - 1} ? 'pagination-item active' : 'pagination-item'" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: 0 5px; border-radius: 50%; background-color: white; color: var(--dark-color); text-decoration: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">&raquo;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Reading Recommendations -->
+<section class="reading-recommendations">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800" style="text-align: center; color: var(--dark-color); margin-bottom: 40px;">Reading Lists</h2>
+        <div class="recommendations-grid" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+            <div class="recommendation-card">
+                <h3>Contemporary African Fiction</h3>
+                <ul>
+                    <li>Stay With Me by Ayobami Adebayo</li>
+                    <li>The Fishermen by Chigozie Obioma</li>
+                    <li>Freshwater by Akwaeke Emezi</li>
+                    <li>The Secret Lives of Baba Segi's Wives by Lola Shoneyin</li>
+                    <li>Homegoing by Yaa Gyasi</li>
+                </ul>
+                <a href="#" class="book-link">See Full List</a>
+            </div>
+            <div class="recommendation-card">
+                <h3>African Poetry Collections</h3>
+                <ul>
+                    <li>Teaching My Mother How to Give Birth by Warsan Shire</li>
+                    <li>A Memory This Size by Kofi Anyidoho</li>
+                    <li>The Collection of African Poetry by Chinua Achebe</li>
+                    <li>Collected Poems by Léopold Sédar Senghor</li>
+                    <li>Your Body is War by Mahtem Shiferraw</li>
+                </ul>
+                <a href="#" class="book-link">See Full List</a>
+            </div>
+            <div class="recommendation-card">
+                <h3>African Memoirs & Non-Fiction</h3>
+                <ul>
+                    <li>Born a Crime by Trevor Noah</li>
+                    <li>Long Walk to Freedom by Nelson Mandela</li>
+                    <li>I Write What I Like by Steve Biko</li>
+                    <li>Finding Myself by Wole Soyinka</li>
+                    <li>We Need New Names by NoViolet Bulawayo</li>
+                </ul>
+                <a href="#" class="book-link">See Full List</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{public/fragments :: footer}"></div>
+
+<!-- Scripts -->
+<div th:replace="~{public/fragments :: scripts}"></div>
+</body>
+</html>

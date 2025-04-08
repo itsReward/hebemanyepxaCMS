@@ -14,12 +14,12 @@
             <span>Edit Quote</span>
         </div>
         <div class="card-body">
-            <form th:action="@{/admin/quotes/edit/{id}(id=${quote.id})}" th:object="${quote}" method="post">
+            <form th:action="@{/admin/quotes/edit/{id}(id=${quoteForm.id})}" th:object="${quoteForm}" method="post">
                 <input type="hidden" th:field="*{id}">
-                
+
                 <div class="mb-3">
-                    <label for="quote" class="form-label">Quote Text</label>
-                    <textarea class="form-control" id="quote" th:field="*{quote}" rows="4" required></textarea>
+                    <label for="quoteText" class="form-label">Quote Text</label>
+                    <textarea class="form-control" id="quoteText" th:field="*{quoteText}" rows="4" required></textarea>
                 </div>
 
                 <div class="mb-3">

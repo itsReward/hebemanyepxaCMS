@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{public/fragments :: head('Apparel')}"></th:block>
+    <style>
+        .apparel-extended {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .apparel-intro {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .apparel-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .filter-item {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .filter-item:hover,
+        .filter-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .apparel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .apparel-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .apparel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .apparel-img {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .apparel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .apparel-card:hover .apparel-img img {
+            transform: scale(1.05);
+        }
+
+        .apparel-info {
+            padding: 20px;
+        }
+
+        .apparel-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .apparel-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .apparel-link {
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .apparel-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .apparel-link:hover::after {
+            width: 100%;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .pagination-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-item:hover,
+        .pagination-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-dots {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+        }
+
+        .pagination-next {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            height: 40px;
+            margin-left: 10px;
+            border-radius: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-next i {
+            margin-left: 8px;
+        }
+
+        .pagination-next:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{public/fragments :: header('apparel')}"></div>
+
+<!-- Page Banner -->
+<div th:replace="~{public/fragments :: page-banner('Apparel Collection')}"></div>
+
+<!-- Apparel Section -->
+<section class="apparel-extended">
+    <div class="container">
+        <div class="apparel-intro" data-aos="fade-up" data-aos-duration="800">
+            <p>Explore our unique collection of apparel inspired by poetry, art, and cultural heritage. Each piece tells a story and carries a meaning beyond fashion.</p>
+        </div>
+
+        <!-- Apparel Grid -->
+        <div class="apparel-grid" data-aos="fade-up" data-aos-duration="800">
+            <!-- Apparel items loaded from database -->
+            <div th:each="item : ${apparel.content}" class="apparel-card">
+                <div class="apparel-img">
+                    <img th:if="${!item.images.isEmpty()}"
+                         th:src="@{'/uploads/' + ${imageHelper.getPrimaryImagePath(item.images)}}"
+                         alt="Apparel Image">
+                    <img th:if="${item.images.isEmpty()}"
+                         th:src="@{/assets/images/apparel-placeholder.jpg}"
+                         alt="No Image Available">
+
+                </div>
+                <div class="apparel-info">
+                    <h3 th:text="${item.title}">Apparel Title</h3>
+                    <div class="apparel-price" th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}">$29.99</div>
+                    <a th:href="@{/apparel/{slug}(slug=${item.slug})}" class="apparel-link">View Details</a>
+                </div>
+            </div>
+
+            <!-- Display message if no apparel -->
+            <div th:if="${apparel.isEmpty()}" style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                <h3>No apparel items available</h3>
+                <p>Check back soon for new items in our collection.</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div th:if="${apparel.totalPages > 1}" class="pagination" data-aos="fade-up" data-aos-duration="800">
+            <a th:href="@{/apparel(page=0)}" class="pagination-item" th:class="${currentPage == 0} ? 'pagination-item active' : 'pagination-item'">&laquo;</a>
+
+            <!-- Previous page link -->
+            <a th:if="${currentPage > 0}" th:href="@{/apparel(page=${currentPage - 1})}" class="pagination-item">&lt;</a>
+
+            <!-- Page numbers -->
+            <th:block th:each="i : ${#numbers.sequence(0, apparel.totalPages - 1)}">
+                <!-- Show 5 pages around current page -->
+                <a th:if="${i == 0 || i == apparel.totalPages - 1 || (i >= currentPage - 2 && i <= currentPage + 2)}"
+                   th:href="@{/apparel(page=${i})}"
+                   th:text="${i + 1}"
+                   th:class="${currentPage == i} ? 'pagination-item active' : 'pagination-item'">1</a>
+
+                <!-- Dots for skipped pages -->
+                <span th:if="${i == 1 && currentPage > 3}" class="pagination-dots">...</span>
+                <span th:if="${i == apparel.totalPages - 2 && currentPage < apparel.totalPages - 4}" class="pagination-dots">...</span>
+            </th:block>
+
+            <!-- Next page link -->
+            <a th:if="${currentPage < apparel.totalPages - 1}" th:href="@{/apparel(page=${currentPage + 1})}" class="pagination-item">&gt;</a>
+
+            <!-- Last page link -->
+            <a th:href="@{/apparel(page=${apparel.totalPages - 1})}" class="pagination-item" th:class="${currentPage == apparel.totalPages - 1} ? 'pagination-item active' : 'pagination-item'">&raquo;</a>
+
+            <!-- Next page button -->
+            <a th:if="${currentPage < apparel.totalPages - 1}" th:href="@{/apparel(page=${currentPage + 1})}" class="pagination-next">
+                Next <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{public/fragments :: footer}"></div>
+
+<!-- Scripts -->
+<div th:replace="~{public/fragments :: scripts}"></div>
+</body>
+</html>

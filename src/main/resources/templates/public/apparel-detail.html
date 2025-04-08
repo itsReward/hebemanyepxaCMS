@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <th:block th:replace="~{public/fragments :: head(${apparelItem.title})}"></th:block>
+  <style>
+    .apparel-detail {
+      padding: 100px 0;
+      background-color: var(--light-color);
+    }
+
+    .apparel-detail-container {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .apparel-detail-images {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-thumbnails {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.03);
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumbnail.active {
+      border-color: var(--primary-color);
+    }
+
+    .apparel-detail-info {
+      flex: 1;
+      min-width: 300px;
+      padding: 40px;
+    }
+
+    .apparel-detail-title {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .apparel-detail-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .apparel-detail-description {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .apparel-detail-cta {
+      margin-top: 30px;
+    }
+
+    .btn-purchase {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      text-decoration: none;
+      border-radius: 30px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-purchase:hover {
+      background-color: var(--accent-color);
+    }
+
+    .btn-inquire {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: transparent;
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 30px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-color);
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 10px;
+    }
+
+    .btn-inquire:hover {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+    }
+
+    .related-apparel {
+      margin-top: 80px;
+    }
+
+    .related-apparel h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary-color);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .back-to-apparel {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .back-to-apparel i {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{public/fragments :: header('apparel')}"></div>
+
+<!-- Page Banner -->
+<div th:replace="~{public/fragments :: page-banner(${apparelItem.title})}"></div>
+
+<!-- Apparel Detail Section -->
+<section class="apparel-detail">
+  <div class="container">
+    <a th:href="@{/apparel}" class="back-to-apparel" data-aos="fade-up" data-aos-duration="800">
+      <i class="fas fa-arrow-left"></i> Back to All Apparel
+    </a>
+
+    <div class="apparel-detail-container" data-aos="fade-up" data-aos-duration="800">
+      <div class="apparel-detail-images">
+        <!-- Main image - show primary or first image -->
+        <div class="main-image">
+          <img th:if="${!apparelItem.images.isEmpty()}"
+
+               th:with="primaryImage=${!apparelItem.images.isEmpty() ? (apparelItem.images[isPrimary == true].size() > 0 ? apparelItem.images[isPrimary == true][0] : apparelItem.images[0]) : null}"
+               th:src="@{${primaryImage != null ? '/uploads/' + primaryImage.filePath : '/assets/images/apparel-placeholder.jpg'}}"id="main-image" alt="Apparel Image">
+          <img th:if="${apparelItem.images.isEmpty()}" th:src="@{/assets/images/apparel-placeholder.jpg}" alt="No Image Available">
+        </div>
+
+        <!-- Thumbnails - only show if multiple images -->
+        <div th:if="${apparelItem.images.size() > 1}" class="image-thumbnails">
+          <div th:each="image, status : ${apparelItem.images}"
+               class="thumbnail"
+               th:classappend="${image.isPrimary || status.index == 0 ? 'active' : ''}"
+               onclick="changeMainImage(this)">
+            <img th:src="@{'/uploads/' + ${image.filePath}}" th:data-src="@{'/uploads/' + ${image.filePath}}" alt="Thumbnail">
+          </div>
+        </div>
+      </div>
+
+      <div class="apparel-detail-info">
+        <h1 class="apparel-detail-title" th:text="${apparelItem.title}">Apparel Title</h1>
+        <div class="apparel-detail-price" th:text="${'$' + #numbers.formatDecimal(apparelItem.price, 1, 2)}">$29.99</div>
+        <div class="apparel-detail-description" th:utext="${apparelItem.description}">
+          Apparel description goes here...
+        </div>
+
+        <div class="apparel-detail-cta">
+          <button class="btn-purchase">Add to Cart</button>
+          <a th:href="@{/contact}" class="btn-inquire">Inquire</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Apparel -->
+    <div th:if="${!relatedItems.isEmpty()}" class="related-apparel" data-aos="fade-up" data-aos-duration="800">
+      <h2>You May Also Like</h2>
+
+      <div class="related-grid">
+        <div th:each="item : ${relatedItems}" class="apparel-card">
+          <div class="apparel-img">
+            <img th:if="${!item.images.isEmpty()}"
+                 th:with="primaryImage=${!apparelItem.images.isEmpty() ? (apparelItem.images[isPrimary == true].size() > 0 ? apparelItem.images[isPrimary == true][0] : apparelItem.images[0]) : null}"
+                 th:src="@{${primaryImage != null ? '/uploads/' + primaryImage.filePath : '/assets/images/apparel-placeholder.jpg'}}"
+                  alt="Apparel Image">
+            <img th:if="${item.images.isEmpty()}" th:src="@{/assets/images/apparel-placeholder.jpg}" alt="No Image Available">
+          </div>
+          <div class="apparel-info">
+            <h3 th:text="${item.title}">Apparel Title</h3>
+            <div class="apparel-price" th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}">$29.99</div>
+            <a th:href="@{/apparel/{slug}(slug=${item.slug})}" class="apparel-link">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{public/fragments :: footer}"></div>
+
+<!-- Scripts -->
+<div th:replace="~{public/fragments :: scripts}"></div>
+
+<script>
+  // Function to change main image when clicking on thumbnails
+  function changeMainImage(thumbnail) {
+    // Get all thumbnails and remove active class
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    thumbnails.forEach(thumb => {
+      thumb.classList.remove('active');
+    });
+
+    // Add active class to clicked thumbnail
+    thumbnail.classList.add('active');
+
+    // Update main image source
+    const mainImage = document.getElementById('main-image');
+    const newSrc = thumbnail.querySelector('img').getAttribute('data-src');
+    mainImage.src = newSrc;
+  }
+</script>
+</body>
+</html>

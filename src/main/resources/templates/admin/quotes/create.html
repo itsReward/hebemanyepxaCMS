@@ -14,10 +14,10 @@
             <span>Add New Quote</span>
         </div>
         <div class="card-body">
-            <form th:action="@{/admin/quotes/create}" th:object="${quote}" method="post">
+            <form th:action="@{/admin/quotes/create}" th:object="${quoteForm}" method="post">
                 <div class="mb-3">
-                    <label for="quote" class="form-label">Quote Text</label>
-                    <textarea class="form-control" id="quote" th:field="*{quote}" rows="4" required></textarea>
+                    <label for="quoteText" class="form-label">Quote Text</label>
+                    <textarea class="form-control" id="quoteText" th:field="*{quoteText}" rows="4" required></textarea>
                 </div>
 
                 <div class="mb-3">

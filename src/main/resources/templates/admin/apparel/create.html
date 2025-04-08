@@ -15,7 +15,7 @@
             <span>Add New Apparel</span>
         </div>
         <div class="card-body">
-            <form th:action="@{/admin/apparel/create}" th:object="${apparel}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/apparel/create}" th:object="${apparelForm}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="title" th:field="*{title}" required>
