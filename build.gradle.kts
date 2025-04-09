@@ -34,6 +34,9 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+    // Add Jsoup for HTML parsing
+    implementation("org.jsoup:jsoup:1.16.1")
 }
 
 tasks.withType<KotlinCompile> {

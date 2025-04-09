@@ -175,10 +175,16 @@
       <div class="apparel-detail-images">
         <!-- Main image - show primary or first image -->
         <div class="main-image">
-          <img th:if="${!apparelItem.images.isEmpty()}"
-
-               th:with="primaryImage=${!apparelItem.images.isEmpty() ? (apparelItem.images[isPrimary == true].size() > 0 ? apparelItem.images[isPrimary == true][0] : apparelItem.images[0]) : null}"
-               th:src="@{${primaryImage != null ? '/uploads/' + primaryImage.filePath : '/assets/images/apparel-placeholder.jpg'}}"id="main-image" alt="Apparel Image">
+          <span th:if="${!apparelItem.images.isEmpty()}">
+            <!-- Find primary image -->
+            <span th:with="primaryImage=${apparelItem.images.size() > 0 ?
+                    (apparelItem.images.?[isPrimary].size() > 0 ?
+                        apparelItem.images.?[isPrimary][0] :
+                        apparelItem.images[0]) :
+                    null}">
+              <img th:src="@{'/uploads/' + ${primaryImage.filePath}}" id="main-image" alt="Apparel Image">
+            </span>
+          </span>
           <img th:if="${apparelItem.images.isEmpty()}" th:src="@{/assets/images/apparel-placeholder.jpg}" alt="No Image Available">
         </div>
 
@@ -214,10 +220,16 @@
       <div class="related-grid">
         <div th:each="item : ${relatedItems}" class="apparel-card">
           <div class="apparel-img">
-            <img th:if="${!item.images.isEmpty()}"
-                 th:with="primaryImage=${!apparelItem.images.isEmpty() ? (apparelItem.images[isPrimary == true].size() > 0 ? apparelItem.images[isPrimary == true][0] : apparelItem.images[0]) : null}"
-                 th:src="@{${primaryImage != null ? '/uploads/' + primaryImage.filePath : '/assets/images/apparel-placeholder.jpg'}}"
-                  alt="Apparel Image">
+            <span th:if="${!item.images.isEmpty()}">
+              <!-- Find primary image -->
+              <span th:with="primaryImage=${item.images.size() > 0 ?
+                      (item.images.?[isPrimary].size() > 0 ?
+                          item.images.?[isPrimary][0] :
+                          item.images[0]) :
+                      null}">
+                <img th:src="@{'/uploads/' + ${primaryImage.filePath}}" alt="Apparel Image">
+              </span>
+            </span>
             <img th:if="${item.images.isEmpty()}" th:src="@{/assets/images/apparel-placeholder.jpg}" alt="No Image Available">
           </div>
           <div class="apparel-info">

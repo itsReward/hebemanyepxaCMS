@@ -113,6 +113,12 @@
             margin-right: 0;
             margin-left: 8px;
         }
+        .single-poetry-content {
+            font-size: 1.2rem;
+            line-height: 2;
+            white-space: pre-line; /* This is crucial for preserving line breaks */
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body>
@@ -135,8 +141,8 @@
                 <div class="single-poetry-meta" th:text="${#temporals.format(poem.publishDate, 'MMMM d, yyyy')}">April 1, 2025</div>
             </div>
 
-            <div class="single-poetry-content" th:text="${poem.content}" style="white-space: pre-line;">
-                Poem content goes here...
+            <div class="single-poetry-content" style="white-space: pre-line;">
+                <span th:utext="${cleanContent}">Poem content goes here...</span>
             </div>
 
             <div class="single-poetry-footer">

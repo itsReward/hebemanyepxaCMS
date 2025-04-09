@@ -46,9 +46,12 @@ p, li, a {
 /* Navigation */
 header {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     z-index: 1000;
-    transition: background-color 0.3s ease;
+    margin: 0;
+    padding: 0;
 }
 
 header.scrolled {
@@ -712,7 +715,8 @@ footer {
     align-items: center;
     justify-content: center;
     color: var(--light-color);
-    margin-top: 80px;
+    margin-top: 0;
+    padding-top: 80px;
 }
 
 .page-banner h1 {
@@ -813,5 +817,66 @@ footer {
 
     .hero p {
         font-size: 1.2rem;
+    }
+}
+/* Floating Stickers Styles - Outlined and Bigger */
+.sticker-container {
+    position: relative;
+    height: 120px; /* Increased height to accommodate bigger stickers */
+    width: 100%;
+    overflow: hidden;
+    z-index: 5;
+    pointer-events: none; /* Let clicks pass through */
+}
+
+.floating-sticker {
+    position: absolute;
+    width: 100px; /* Increased size from 60px to 100px */
+    height: 100px; /* Increased size from 60px to 100px */
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Add some variations */
+.sticker-container:nth-child(even) .floating-sticker {
+    animation-duration: 5s;
+    left: 60%;
+}
+
+.sticker-container:nth-child(3n) .floating-sticker {
+    animation-duration: 6s;
+    left: 40%;
+}
+
+.sticker-container:nth-child(4n) .floating-sticker {
+    width: 120px; /* Even bigger for some variation */
+    height: 120px;
+}
+
+/* Floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg) translateX(-50%);
+    }
+    50% {
+        transform: translateY(-15px) rotate(5deg) translateX(-50%);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg) translateX(-50%);
+    }
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .floating-sticker {
+        width: 80px; /* Still bigger than original, but adjusted for mobile */
+        height: 80px;
+    }
+
+    .sticker-container {
+        height: 100px;
     }
 }

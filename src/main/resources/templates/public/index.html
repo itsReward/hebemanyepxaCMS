@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <title>Hebe Manyepxa | Author</title>
     <th:block th:replace="~{public/fragments :: head('Home')}"></th:block>
+    <link rel="stylesheet" href="/static/assets/css/style.css">
 </head>
 <body>
 <!-- Header -->
@@ -37,7 +39,7 @@
     </div>
 </section>
 
-<!-- Featured Books Section -->
+<!--Featured Books Section -->
 <section class="books" id="books" th:if="${!featuredBooks.isEmpty()}">
     <div class="books-pattern"></div>
     <div class="container">
@@ -51,7 +53,12 @@
                 </div>
                 <div class="book-info">
                     <h3 th:text="${book.title}">Book Title</h3>
-                    <p th:text="${#strings.length(book.description) > 150 ? #strings.substring(book.description, 0, 150) + '...' : book.description}">Book description excerpt...</p>
+
+                    <!-- Using HTML utility to clean description -->
+                    <p th:utext="${#strings.length(htmlUtil.cleanHtml(book.description)) > 150 ?
+                               #strings.substring(htmlUtil.cleanHtml(book.description), 0, 150) + '...' :
+                               htmlUtil.cleanHtml(book.description)}">Book description excerpt...</p>
+
                     <a th:if="${book.bookLink != null}" th:href="${book.bookLink}" class="book-link" target="_blank">Read Review</a>
                     <a th:unless="${book.bookLink != null}" th:href="@{/books/{slug}(slug=${book.slug})}" class="book-link">View Details</a>
                 </div>

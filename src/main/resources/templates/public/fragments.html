@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <th:block th:fragment="head(title)">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title th:text="${title} + ' | Hebe Manyepxa'">Hebe Manyepxa</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&family=Playfair+Display:ital@0;1&family=Dancing+Script&display=swap" rel="stylesheet">
-        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-        <link rel="icon" th:href="@{/assets/favicon.ico}">
-    </th:block>
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}"></title>
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <!-- Header Fragment -->
@@ -24,13 +20,13 @@
             </div>
             <ul class="nav-links">
                 <li><a th:href="@{/}" th:class="${active == 'home'} ? 'active' : ''">Home</a></li>
-                <li><a th:href="@{/about}" th:class="${active == 'about'} ? 'active' : ''">About</a></li>
+                <li><a th:href="@{/#about}" th:class="${active == 'about'} ? 'active' : ''">About</a></li>
                 <li><a th:href="@{/books}" th:class="${active == 'books'} ? 'active' : ''">Books</a></li>
                 <li><a th:href="@{/poetry}" th:class="${active == 'poetry'} ? 'active' : ''">Poetry</a></li>
                 <li><a th:href="@{/quotes}" th:class="${active == 'quotes'} ? 'active' : ''">Quotes</a></li>
                 <li><a th:href="@{/apparel}" th:class="${active == 'apparel'} ? 'active' : ''">Apparel</a></li>
-                <li><a th:href="@{/blog}" th:class="${active == 'blog'} ? 'active' : ''">Blog</a></li>
-                <li><a th:href="@{/contact}" th:class="${active == 'contact'} ? 'active' : ''">Contact</a></li>
+                <!--<li><a th:href="@{/blog}" th:class="${active == 'blog'} ? 'active' : ''">Blog</a></li> -->
+                <li><a th:href="@{/#contact}" th:class="${active == 'contact'} ? 'active' : ''">Contact</a></li>
             </ul>
         </nav>
     </div>
