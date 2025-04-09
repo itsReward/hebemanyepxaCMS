@@ -880,3 +880,81 @@ footer {
         height: 100px;
     }
 }
+
+body {
+    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    overflow-x: hidden;
+    font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+p, li, a {
+    font-family: 'Jacques Display', 'Merriweather', serif;
+    line-height: 1.8;
+    font-size: 1.2rem;
+}
+
+.main-nav {
+    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+/* Ensure specific elements use Fioletrina */
+.nav-links a,
+.quote-author,
+.footer-links a,
+.blog-date,
+.blog-content h3,
+.form-control,
+.submit-btn {
+    font-family: 'Fioletrina', 'Roboto', sans-serif;
+}
+
+/* Custom Font Declarations */
+@font-face {
+    font-family: 'Fioletrina';
+    src: url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype'),
+    url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fioletrina';
+    src: url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype'),
+    url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Jacques Display';
+    src: url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Regular.woff2') format('woff2'),
+    url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Jacques Display';
+    src: url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
+    url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Fallback Fonts */
+body {
+    font-family: 'Fioletrina', 'Roboto', sans-serif;
+}
+
+p, li, a {
+    font-family: 'Jacques Display', 'Merriweather', serif;
+}
