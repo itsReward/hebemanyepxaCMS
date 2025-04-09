@@ -882,27 +882,35 @@ footer {
 }
 
 body {
-    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-family: 'Jacques Display', 'Roboto', sans-serif;
     background-color: var(--light-color);
     color: var(--dark-color);
     overflow-x: hidden;
     font-weight: 300;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fioletrina', 'Roboto', sans-serif;
+h1 {
+    font-family: 'silentha', 'Roboto', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
 
+
+h2, h3, h4, h5, h6 {
+    font-family: 'Jacques Display', 'Roboto', sans-serif;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+
+
 p, li, a {
     font-family: 'Jacques Display', 'Merriweather', serif;
     line-height: 1.8;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .main-nav {
-    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-family: 'silentha', 'Roboto', sans-serif;
     font-weight: 300;
 }
 
@@ -914,45 +922,38 @@ p, li, a {
 .blog-content h3,
 .form-control,
 .submit-btn {
-    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-family: 'Jacques Display', 'Roboto', sans-serif;
 }
 
-/* Custom Font Declarations */
+
 @font-face {
-    font-family: 'Fioletrina';
-    src: url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype'),
-    url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype');
+    font-family: 'silentha';
+    src: url('../fonts/silentha/Silentha OT.woff2') format('woff2'),
+    url('../fonts/silentha/Silentha OT.woff') format('woff'),
+    url('../fonts/silentha/Silentha OT.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Fioletrina';
-    src: url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype'),
-    url('/static/assets/fonts/Fioletrina/Fioletrina.ttf') format('truetype');
+    font-family: 'Jacques Display';
+    src: url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
+    url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Jacques Display';
-    src: url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Regular.woff2') format('woff2'),
-    url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Jacques Display';
-    src: url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
-    url('/static/assets/fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
-    font-weight: 400;
+    src: url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
+    url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
+    font-weight: 300;
     font-style: italic;
 }
 
 /* Fallback Fonts */
 body {
-    font-family: 'Fioletrina', 'Roboto', sans-serif;
+    font-family: 'silentha', 'Roboto', sans-serif;
 }
 
 p, li, a {

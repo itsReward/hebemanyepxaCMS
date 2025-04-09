@@ -33,12 +33,20 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="animate__animated animate__fadeInDown">Welcome to My Official Website</h1>
-            <p class="animate__animated animate__fadeIn animate__delay-1s" style="text-align: center; margin-left: auto; margin-right: auto;">I'm so glad you’re here! This space is more than just a place to explore my writing, it's a home for stories that uplift, inspire, and remind us of the power of love and kindness. Through my words, I hope to spark joy, encourage hearts, and remind you that even the smallest acts of kindness can create ripples of change.
+            <a href="#welcome-message" class="btn animate__animated animate__fadeInUp animate__delay-2s">Proceed</a>
+        </div>
+    </div>
+</section>
 
-                Feel free to browse, connect, and join my newsletter for exclusive content, special announcements, and a little extra light for your journey.
-
-                Thank you for being here. May your heart be full, your spirit be lifted, and your days be filled with kindness.</p>
-            <a href="#about" class="btn animate__animated animate__fadeInUp animate__delay-2s">About</a>
+<!-- Welcome Message Section -->
+<section id="welcome-message" style="padding: 80px 0; background-color: var(--light-color);">
+    <div class="container">
+        <div class="welcome-content" data-aos="fade-up" data-aos-duration="1000" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title" style="text-align: center;">A Warm Welcome</h2>
+            <p>I'm so glad you're here! This space is more than just a place to explore my writing, it's a home for stories that uplift, inspire, and remind us of the power of love and kindness. Through my words, I hope to spark joy, encourage hearts, and remind you that even the smallest acts of kindness can create ripples of change.</p>
+            <p>Feel free to browse, connect, and join my newsletter for exclusive content, special announcements, and a little extra light for your journey.</p>
+            <p>Thank you for being here. May your heart be full, your spirit be lifted, and your days be filled with kindness.</p>
+            <p style="font-style: italic; margin-top: 20px;">With love,<br>Hebe Manyepxa</p>
         </div>
     </div>
 </section>
@@ -141,7 +149,7 @@
 </section>
 
 <!-- Featured Apparel Section -->
-<section class="apparel-featured" th:if="${!featuredApparel.isEmpty()}" style="padding: 100px 0; background-color: var(--secondary-color); position: relative; overflow: hidden;">
+<section class="apparel-home" th:if="${!featuredApparel.isEmpty()}" style="padding: 100px 0; background-color: var(--secondary-color); position: relative; overflow: hidden;">
     <div class="container">
         <h2 class="section-title" style="text-align: center; color: var(--dark-color); margin-bottom: 50px;">Featured Apparel</h2>
 
