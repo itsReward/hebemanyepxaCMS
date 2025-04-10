@@ -36,7 +36,7 @@
                 <li><a th:href="@{/books}" th:class="${active == 'books'} ? 'active' : ''">Books</a></li>
                 <li><a th:href="@{/poetry}" th:class="${active == 'poetry'} ? 'active' : ''">Poetry</a></li>
                 <li><a th:href="@{/quotes}" th:class="${active == 'quotes'} ? 'active' : ''">Quotes</a></li>
-                <li><a th:href="@{/#apparel-home}" th:class="${active == 'apparel'} ? 'active' : ''">Apparel</a></li>
+                <li><a th:href="@{/apparel}" th:class="${active == 'apparel'} ? 'active' : ''">Apparel</a></li>
                 <!--<li><a th:href="@{/blog}" th:class="${active == 'blog'} ? 'active' : ''">Blog</a></li> -->
                 <li><a th:href="@{/#contact}" th:class="${active == 'contact'} ? 'active' : ''">Contact</a></li>
             </ul>
@@ -68,17 +68,17 @@
                     <li><a th:href="@{/poetry}">Poetry</a></li>
                     <li><a th:href="@{/quotes}">Quotes</a></li>
                     <li><a th:href="@{/apparel}">Apparel</a></li>
-                    <li><a th:href="@{/blog}">Blog</a></li>
-                    <li><a th:href="@{/contact}">Contact</a></li>
+                    <!--<li><a th:href="@{/blog}">Blog</a></li>-->
+                    <li><a th:href="@{/#contact}">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h3>Favorite Books</h3>
+                <h3>Featured Items</h3>
                 <ul class="footer-links">
-                    <li><a th:href="@{/books/americanah}">Americanah</a></li>
-                    <li><a th:href="@{/books/masnavi}">Masnavi</a></li>
-                    <li><a th:href="@{/books/the-great-gatsby}">The Great Gatsby</a></li>
-                    <li><a th:href="@{/books/the-seven-story-mountain}">The Seven Story Mountain</a></li>
+                    <li><a th:href="@{/poetry}">All Poetry</a></li>
+                    <li><a th:href="@{/apparel}">All Apparel</a></li>
+                    <li><a th:href="@{/books}">Favourite Books</a></li>
+                    <li><a th:href="@{/quotes}">All Quotes</a></li>
                 </ul>
             </div>
             <div class="footer-column">

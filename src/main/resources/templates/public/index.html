@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
     <title>Hebe Manyepxa | Author</title>
     <th:block th:replace="~{public/fragments :: head('Home')}"></th:block>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pageTitle} + ' | Hebe Manyepxa'"></title>
-
-    <!-- Custom Fonts -->
+ <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -22,6 +24,33 @@
 
     <!-- Favicon -->
     <link rel="icon" th:href="@{/assets/favicon.ico}" type="image/x-icon">
+
+    <style>
+        .scroll-indicator {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .scroll-arrow-link {
+            display: inline-block;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-arrow-link:hover {
+            transform: translateY(5px);
+        }
+
+        .scroll-text {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 <!-- Header -->
@@ -33,7 +62,19 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="animate__animated animate__fadeInDown">Welcome to My Official Website</h1>
-            <a href="#welcome-message" class="btn animate__animated animate__fadeInUp animate__delay-2s">Proceed</a>
+            <div class="scroll-indicator animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#welcome-message" class="scroll-arrow-link">
+                    <lottie-player
+                            src="/assets/animations/down-arrow.json"
+                            background="transparent"
+                            speed="1"
+                            style="width: 80px; height: 80px; margin: 0 auto;"
+                            loop
+                            autoplay>
+                    </lottie-player>
+                    <span class="scroll-text">Scroll Down</span>
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -93,6 +134,12 @@
                     <a th:unless="${book.bookLink != null}" th:href="@{/books/{slug}(slug=${book.slug})}" class="book-link">View Details</a>
                 </div>
             </div>
+        </div>
+
+        <div class="text-center" style="text-align: center; margin-top: 40px;position: relative; z-index: 10;">
+            <a th:href="@{/books}" class="btn" style="display: inline-block; padding: 12px 30px; background-color: var(--accent-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border: 2px solid var(--accent-color);">
+                View More
+            </a>
         </div>
     </div>
 </section>
@@ -198,11 +245,11 @@
                     </li>
                 </ul>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-goodreads-g"></i></a>
+                    <a href="https://www.facebook.com/share/1ALb27NEYT/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/HManyepxa?t=nsWVKDo8mLIDEXdPpi5rSg&s=09"><i class="fab fa-x"></i></a>
+                    <a href="https://www.instagram.com/hebemanyepxa/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/hebe-manyepxa-5356b7138?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.tiktok.com/@hebemanyepxa?_t=ZM-8vPku4hQZs6&_r=1"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
             <div class="contact-form" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">

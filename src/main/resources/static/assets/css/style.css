@@ -66,8 +66,9 @@ nav {
 }
 
 .logo {
+    font-family: san-brainy, fantasy;
     font-size: 26px;
-    font-weight: 200;
+    font-weight: 500;
     color: var(--light-color);
     text-decoration: none;
 }
@@ -78,7 +79,7 @@ nav {
 }
 
 .nav-links li {
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 .nav-links a {
@@ -88,6 +89,7 @@ nav {
     font-weight: 300;
     transition: all 0.3s ease;
     position: relative;
+    font-size: 1rem;
 }
 
 .nav-links a:hover {
@@ -890,7 +892,7 @@ body {
 }
 
 h1 {
-    font-family: 'silentha', 'Roboto', sans-serif;
+    font-family: 'san-brainy', 'Roboto', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
@@ -910,7 +912,7 @@ p, li, a {
 }
 
 .main-nav {
-    font-family: 'silentha', 'Roboto', sans-serif;
+    font-family: 'san-brainy', 'Roboto', sans-serif;
     font-weight: 300;
 }
 
@@ -936,6 +938,16 @@ p, li, a {
 }
 
 @font-face {
+    font-family: 'san-brainy';
+    src: url('../fonts/San Brainy/san-brainy.woff2') format('woff2'),
+    url('../fonts/San Brainy/san-brainy.woff') format('woff'),
+    url('../fonts/San Brainy/san-brainy.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+@font-face {
     font-family: 'Jacques Display';
     src: url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
     url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
@@ -954,6 +966,10 @@ p, li, a {
 /* Fallback Fonts */
 body {
     font-family: 'silentha', 'Roboto', sans-serif;
+}
+
+body {
+    font-family: 'san-brainy', 'Roboto', sans-serif;
 }
 
 p, li, a {
@@ -1010,7 +1026,7 @@ p, li, a {
 }
 
 .single-poetry-title {
-    font-family: 'Cliona', Georgia, serif;
+    font-family: 'san-brainy', Georgia, serif;
     /* ... */
 }
 
