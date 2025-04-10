@@ -959,3 +959,62 @@ body {
 p, li, a {
     font-family: 'Jacques Display', 'Merriweather', serif;
 }
+
+/* Apparel card styles with fixed dimensions */
+.apparel-card {
+    background-color: var(--light-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.apparel-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.apparel-img {
+    height: 250px; /* Fixed height for all apparel images */
+    width: 100%;
+    overflow: hidden;
+}
+
+.apparel-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image covers the area without distortion */
+    transition: transform 0.5s ease;
+}
+
+.apparel-info {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.apparel-grid-featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+/* Make sure each grid item has consistent sizing */
+.apparel-grid-featured > * {
+    min-width: 0; /* Prevents grid items from overflowing */
+}
+
+.single-poetry-title {
+    font-family: 'Cliona', Georgia, serif;
+    /* ... */
+}
+
+.single-poetry-content {
+    font-family: 'Cliona', Georgia, serif;
+    /* ... */
+}

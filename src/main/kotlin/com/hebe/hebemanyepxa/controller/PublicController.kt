@@ -46,6 +46,10 @@ class PublicController(
         model.addAttribute("featuredQuotes", featuredQuotes)
         model.addAttribute("featuredApparel", featuredApparel)
 
+        // Add image helper for featured apparel
+        model.addAttribute("imageHelper", com.hebe.hebemanyepxa.util.ImageHelper())
+
+
         // Add HTML utility for templates to use
         addHtmlUtil(model)
 

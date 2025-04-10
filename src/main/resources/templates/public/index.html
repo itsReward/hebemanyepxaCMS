@@ -149,26 +149,24 @@
 </section>
 
 <!-- Featured Apparel Section -->
-<section class="apparel-home" th:if="${!featuredApparel.isEmpty()}" style="padding: 100px 0; background-color: var(--secondary-color); position: relative; overflow: hidden;">
+<section class="apparel-featured" th:if="${featuredApparel != null && !featuredApparel.isEmpty()}" style="padding: 100px 0; background-color: var(--secondary-color); position: relative; overflow: hidden;">
     <div class="container">
         <h2 class="section-title" style="text-align: center; color: var(--dark-color); margin-bottom: 50px;">Featured Apparel</h2>
 
-        <div class="apparel-grid-featured" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px;">
+        <div class="apparel-grid-featured">
             <div th:each="item : ${featuredApparel}" class="apparel-card" data-aos="fade-up" data-aos-duration="800" th:data-aos-delay="${itemStat.index * 200}">
                 <div class="apparel-img">
-
-                    <img th:if="${!item.images.isEmpty()}"
-                         th:src="@{'/uploads/' + ${imageHelper.getPrimaryImagePath(item.images)}}"
+                    <img th:if="${item.images != null && !item.images.isEmpty()}"
+                         th:src="@{'/uploads/' + ${item.images[0].filePath}}"
                          alt="Apparel Image">
-                    <img th:if="${item.images.isEmpty()}"
+                    <img th:unless="${item.images != null && !item.images.isEmpty()}"
                          th:src="@{/assets/images/apparel-placeholder.jpg}"
                          alt="No Image Available">
-
                 </div>
                 <div class="apparel-info">
                     <h3 th:text="${item.title}">Apparel Title</h3>
                     <div class="apparel-price" th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}" style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">$29.99</div>
-                    <a th:href="@{/apparel/{slug}(slug=${item.slug})}" class="apparel-link">View Details</a>
+                    <a th:href="@{/apparel/{slug}(slug=${item.slug})}" class="apparel-link" style="margin-top: auto;">View Details</a>
                 </div>
             </div>
         </div>
@@ -180,6 +178,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Contact Section -->
 <section class="contact" id="contact">
