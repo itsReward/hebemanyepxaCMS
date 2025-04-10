@@ -50,12 +50,18 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-// Add this block to specify the main class
+// Explicitly set the main class
 springBoot {
-    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplicationKt")
+    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplication")
 }
 
-// Optional: Configure the bootJar task
 tasks.bootJar {
-    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplicationKt")
+    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplication")
+    archiveFileName.set("application.jar")
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "com.hebe.hebemanyepxa.HebemanyepxaApplication"
+    }
 }
