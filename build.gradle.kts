@@ -49,3 +49,13 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+// Add this block to specify the main class
+springBoot {
+    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplicationKt")
+}
+
+// Optional: Configure the bootJar task
+tasks.bootJar {
+    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplicationKt")
+}

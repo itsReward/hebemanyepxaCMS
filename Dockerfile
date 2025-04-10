@@ -24,4 +24,5 @@ RUN mkdir -p /opt/render/project/uploads && chmod -R 777 /opt/render/project/upl
 RUN ./gradlew build -x test
 
 # Set the JAR file as the entrypoint
+# Use the specific JAR name that includes the version
 ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-0.0.1-SNAPSHOT.jar"]
