@@ -21,7 +21,7 @@ COPY src src
 RUN mkdir -p /opt/render/project/uploads && chmod -R 777 /opt/render/project/uploads
 
 # Build the application
-RUN ./gradlew build -x test
+RUN ./gradlew build --no-daemon
 
 # Set the JAR file as the entrypoint
 ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-0.0.1-SNAPSHOT.jar"]
