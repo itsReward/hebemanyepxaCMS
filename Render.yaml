@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: hebemanyepxa-cms
+    env: docker
+    region: ohio  # Change this to your preferred region
+    plan: free
+    branch: main  # Change this to your main branch
+    envVars:
+      - key: PGUSER
+        sync: false  # This means you'll need to manually set it
+      - key: PGPASSWORD
+        sync: false  # This means you'll need to manually set it
+      - key: FILE_UPLOAD_DIR
+        value: /opt/render/project/uploads
+      - key: PORT
+        value: 8080
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/uploads
+      sizeGB: 1
+
+databases:
+  - name: hebemanyepxa-db
+    plan: free
+    region: ohio  # Should match your web service region
