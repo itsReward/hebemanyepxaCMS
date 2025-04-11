@@ -57,7 +57,7 @@ springBoot {
 
 tasks.bootJar {
     mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplication")
-    archiveFileName.set("application.jar")
+    archiveFileName.set("hebemanyepxa-app.jar")
 }
 
 tasks.jar {

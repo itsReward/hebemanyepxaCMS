@@ -36,4 +36,4 @@ RUN ./gradlew bootJar
 RUN ls -la build/libs/
 
 # Set the JAR file as the entrypoint
-ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-app.jar"]
