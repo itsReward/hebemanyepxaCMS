@@ -30,7 +30,10 @@ RUN mkdir -p $GRADLE_USER_HOME && \
     (sleep 10 && ./gradlew dependencies --refresh-dependencies)
 
 # Build the application
-RUN ./gradlew clean build -x test --no-daemon
+RUN ./gradlew bootJar
+
+# Verify the JAR file exists
+RUN ls -la build/libs/
 
 # Set the JAR file as the entrypoint
 ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-0.0.1-SNAPSHOT.jar"]
