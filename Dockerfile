@@ -2,7 +2,7 @@ FROM amazoncorretto:17-alpine
 
 WORKDIR /app
 
-# Install dependencies
+# Install debugging tools
 RUN apk add --no-cache bash
 
 # Copy Gradle files first for better layer caching
@@ -13,20 +13,17 @@ COPY build.gradle.kts settings.gradle.kts ./
 # Ensure gradlew is executable
 RUN chmod +x ./gradlew
 
-# Run Gradle wrapper to verify it works and download dependencies
-RUN ./gradlew --version
-
 # Copy source code
 COPY src src
 
-# Create upload directory and make it writable
+# Create upload directory
 RUN mkdir -p /opt/render/project/uploads && chmod -R 777 /opt/render/project/uploads
 
-# Build the application with more detailed output
+# Build with Gradle - using the specific JAR name from build.gradle.kts
 RUN ./gradlew bootJar --info
 
-# Verify the JAR file exists
+# Check if the JAR exists
 RUN ls -la build/libs/
 
-# Set the JAR file as the entrypoint
-ENTRYPOINT ["java", "-jar", "/app/build/libs/hebemanyepxa-0.0.1-SNAPSHOT.jar"]
+# Use the specific JAR file name we set in build.gradle.kts
+ENTRYPOINT ["java", "-jar", "/app/build/libs/app.jar"]

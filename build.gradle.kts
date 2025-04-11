@@ -50,18 +50,38 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-// Explicitly set the main class
-springBoot {
-    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplication")
-}
-
+// Make sure bootJar task is explicitly configured
 tasks.bootJar {
-    mainClass.set("com.hebe.hebemanyepxa.HebemanyepxaApplication")
-    archiveFileName.set("hebemanyepxa-app.jar")
+    archiveFileName.set("app.jar")
+
+    // Print information about the output
+    doLast {
+        println("====== Boot JAR created ======")
+        println("JAR file: ${archiveFile.get().asFile.absolutePath}")
+        println("JAR file exists: ${archiveFile.get().asFile.exists()}")
+        println("JAR file size: ${archiveFile.get().asFile.length()} bytes")
+        println("==============================")
+    }
 }
 
+// Explicitly disable the plain jar task to avoid confusion
 tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "com.hebe.hebemanyepxa.HebemanyepxaApplication"
+    enabled = false
+}
+
+// Add a task to print build info
+tasks.register("printBuildInfo") {
+    doLast {
+        println("====== Build Information ======")
+        println("Project: ${project.name}")
+        println("Group: ${project.group}")
+        println("Version: ${project.version}")
+        println("Build directory: ${project.buildDir}")
+        println("==============================")
     }
+}
+
+// Make bootJar depend on printBuildInfo
+tasks.bootJar {
+    dependsOn("printBuildInfo")
 }
