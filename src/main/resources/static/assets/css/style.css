@@ -23,12 +23,13 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
     font-weight: 100;
     letter-spacing: 1px;
+    font-size: 12px;
 }
 
 p, li, a {
     font-family: 'Dancing Script', cursive;
     line-height: 1.8;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
 }
 
 .main-nav {
@@ -892,7 +893,7 @@ body {
 }
 
 h1 {
-    font-family: 'san-brainy', 'Roboto', sans-serif;
+    font-family: 'Dearjoe6', 'Roboto', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
@@ -912,7 +913,7 @@ p, li, a {
 }
 
 .main-nav {
-    font-family: 'san-brainy', 'Roboto', sans-serif;
+    font-family: 'Dearjoe 6', 'Roboto', sans-serif;
     font-weight: 300;
 }
 
@@ -959,6 +960,14 @@ p, li, a {
     font-family: 'Jacques Display';
     src: url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff2') format('woff2'),
     url('../fonts/Jacques Display/Webfonts/JacquesPro-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Dearjoe 6 ';
+    src: url('../fonts/dearjoe 6/dearJoe 6.woff2') format('woff2'),
+    url('../fonts/dearjoe 6/dearJoe 6.woff') format('woff');
     font-weight: 300;
     font-style: italic;
 }
