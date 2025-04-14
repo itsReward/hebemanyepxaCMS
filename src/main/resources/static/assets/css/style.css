@@ -824,20 +824,24 @@ footer {
         font-size: 1.2rem;
     }
 }
+
+
 /* Floating Stickers Styles - Outlined and Bigger */
 .sticker-container {
     position: relative;
     height: 120px; /* Increased height to accommodate bigger stickers */
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     z-index: 5;
     pointer-events: none; /* Let clicks pass through */
 }
 
 .floating-sticker {
+    overflow: visible !important;
+    pointer-events: none; /* Allows clicks through the sticker */
+    width: 100px; /* Maintain your desired size */
+    height: auto;
     position: absolute;
-    width: 100px; /* Increased size from 60px to 100px */
-    height: 100px; /* Increased size from 60px to 100px */
     left: 50%;
     top: 10px;
     transform: translateX(-50%);

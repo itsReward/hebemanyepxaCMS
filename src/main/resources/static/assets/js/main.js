@@ -244,39 +244,55 @@ document.addEventListener('DOMContentLoaded', function() {
         butterflyStickers.push(imgSticker);
     });
 
+
     // Combine all sticker designs
     const allStickers = [...stickerDesigns, ...butterflyStickers];
+
+    // Calculate total stickers needed
+    const totalStickers = sections.length - 1;
+
+    // Prepare stickers array with guaranteed butterflies
+    let stickersToPlace = [];
+
+    // Add minimum 2 butterflies or as many as possible if there's less space
+    const butterflyCount = Math.min(2, totalStickers);
+    for (let i = 0; i < butterflyCount; i++) {
+        const randomButterflyIndex = Math.floor(Math.random() * butterflyStickers.length);
+        stickersToPlace.push(butterflyStickers[randomButterflyIndex]);
+    }
+
+    // Fill remaining spots with random stickers from allStickers
+    const remaining = totalStickers - butterflyCount;
+    for (let i = 0; i < remaining; i++) {
+        const randomIndex = Math.floor(Math.random() * allStickers.length);
+        stickersToPlace.push(allStickers[randomIndex]);
+    }
+
+    // Shuffle the stickers to distribute butterflies randomly
+    stickersToPlace = shuffleArray(stickersToPlace);
 
     // Insert stickers between sections
     for (let i = 0; i < sections.length - 1; i++) {
         const stickerContainer = document.createElement('div');
         stickerContainer.className = 'sticker-container';
 
-        // Add z-index and positioning
+        // Add styling
         stickerContainer.style.position = 'relative';
-        stickerContainer.style.zIndex = '1000';  // Add this line
+        stickerContainer.style.zIndex = '1000';
+        stickerContainer.style.overflow = 'visible';
 
-        // Choose a random sticker design
-        const randomIndex = Math.floor(Math.random() * allStickers.length);
-        stickerContainer.innerHTML = allStickers[randomIndex];
+        // Use pre-prepared sticker from shuffled array
+        stickerContainer.innerHTML = stickersToPlace[i];
 
+        // ... [keep existing random positioning code] ...
 
-
-        // Randomize position within the container slightly
-        const sticker = stickerContainer.querySelector('.floating-sticker');
-        if (sticker) {
-            const randomX = Math.floor(2 * 30) - 15; // -15 to 15
-            sticker.style.transform = `translateX(${randomX}%)`;
-        }
-
-        // Insert after current section
         sections[i].after(stickerContainer);
     }
-
     // Add floating animation to all stickers
     const stickers = document.querySelectorAll('.floating-sticker');
     stickers.forEach((sticker, index) => {
         // Add z-index to individual stickers as well
+        sticker.style.overflow = 'visible';
         sticker.style.zIndex = '1000';
         sticker.style.position = 'absolute';
 
@@ -285,3 +301,12 @@ document.addEventListener('DOMContentLoaded', function() {
         sticker.style.animationDelay = `${delay}s`;
     });
 });
+
+// Shuffle array function
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
