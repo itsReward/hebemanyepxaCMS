@@ -891,6 +891,7 @@ body {
     color: var(--dark-color);
     overflow-x: hidden;
     font-weight: 300;
+    font-size: 0.95rem; /* Reduced from original size */
 }
 
 h1 {
@@ -910,7 +911,7 @@ h2, h3, h4, h5, h6 {
 p, li, a {
     font-family: 'Jacques Display', 'Merriweather', serif;
     line-height: 1.8;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .main-nav {
