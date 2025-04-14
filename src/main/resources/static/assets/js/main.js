@@ -217,29 +217,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add butterfly SVGs to your sticker designs
     const butterflyStickers = [
-        // Butterfly SVG 1
-        `<svg viewBox="0 0 100 100" class="floating-sticker">
-            <path d="M50,30 c10,-10 20,-15 30,-10 c5,5 5,15 0,20 c-10,10 -30,10 -30,10 c0,0 -20,0 -30,-10 c-5,-5 -5,-15 0,-20 c10,-5 20,0 30,10z" 
-                  fill="none" stroke="#8B5A2B" stroke-width="2"/>
-            <path d="M50,30 c5,-5 10,-10 15,-5 c5,5 0,10 -5,15 c-5,-5 -10,-10 -15,-5 c-5,5 0,10 5,15z" 
-                  fill="none" stroke="#CD853F" stroke-width="1.5"/>
-            <path d="M50,30 v40" stroke="#8B5A2B" stroke-width="1" stroke-dasharray="3,3"/>
-            <circle cx="50" cy="70" r="3" fill="none" stroke="#CD853F" stroke-width="1.5"/>
-        </svg>`,
+        // Butterfly SVG 1 - Now 4x larger
+        `<svg viewBox="0 0 400 400" class="floating-sticker">
+                <path d="M200,120 c40,-40 80,-60 120,-40 c20,20 20,60 0,80 c-40,40 -120,40 -120,40 c0,0 -80,0 -120,-40 c-20,-20 -20,-60 0,-80 c40,-20 80,0 120,40z" 
+                      fill="none" stroke="#8B5A2B" stroke-width="8"/>
+                <path d="M200,120 c20,-20 40,-40 60,-20 c20,20 0,40 -20,60 c-20,-20 -40,-40 -60,-20 c-20,20 0,40 20,60z" 
+                      fill="none" stroke="#CD853F" stroke-width="6"/>
+                <path d="M200,120 v160" stroke="#8B5A2B" stroke-width="4" stroke-dasharray="12,12"/>
+                <circle cx="200" cy="280" r="12" fill="none" stroke="#CD853F" stroke-width="6"/>
+            </svg>`,
 
-        // Butterfly SVG 2
-        `<svg viewBox="0 0 100 100" class="floating-sticker">
-            <path d="M50,30 c10,-15 30,-20 35,-10 c5,10 -5,20 -15,25 c-5,2 -10,3 -20,5 c-10,-2 -15,-3 -20,-5 c-10,-5 -20,-15 -15,-25 c5,-10 25,-5 35,10z" 
-                  fill="none" stroke="#8B5A2B" stroke-width="2"/>
-            <path d="M50,30 v40" stroke="#8B5A2B" stroke-width="1" stroke-dasharray="3,3"/>
-            <circle cx="50" cy="30" r="3" fill="none" stroke="#CD853F" stroke-width="1.5"/>
-            <circle cx="50" cy="70" r="3" fill="none" stroke="#CD853F" stroke-width="1.5"/>
-        </svg>`
+        // Butterfly SVG 2 - Now 4x larger
+        `<svg viewBox="0 0 400 400" class="floating-sticker">
+                <path d="M200,120 c40,-60 120,-80 140,-40 c20,40 -20,80 -60,100 c-20,8 -40,12 -80,20 c-40,-8 -60,-12 -80,-20 c-40,-20 -80,-60 -60,-100 c20,-40 100,-20 140,40z" 
+                      fill="none" stroke="#8B5A2B" stroke-width="8"/>
+                <path d="M200,120 v160" stroke="#8B5A2B" stroke-width="4" stroke-dasharray="12,12"/>
+                <circle cx="200" cy="120" r="12" fill="none" stroke="#CD853F" stroke-width="6"/>
+                <circle cx="200" cy="280" r="12" fill="none" stroke="#CD853F" stroke-width="6"/>
+            </svg>`
     ];
+
 
     // Add PNG butterflies to your sticker designs
     butterflyPngImages.forEach(imgPath => {
-        const imgSticker = `<img src="${imgPath}" class="floating-sticker" style="width: 80px; height: auto;">`;
+        const imgSticker = `<img src="${imgPath}" class="floating-sticker" style="width: 160px; height: auto;">`;
         butterflyStickers.push(imgSticker);
     });
 
@@ -251,14 +252,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const stickerContainer = document.createElement('div');
         stickerContainer.className = 'sticker-container';
 
+        // Add z-index and positioning
+        stickerContainer.style.position = 'relative';
+        stickerContainer.style.zIndex = '1000';  // Add this line
+
         // Choose a random sticker design
         const randomIndex = Math.floor(Math.random() * allStickers.length);
         stickerContainer.innerHTML = allStickers[randomIndex];
 
+
+
         // Randomize position within the container slightly
         const sticker = stickerContainer.querySelector('.floating-sticker');
         if (sticker) {
-            const randomX = Math.floor(Math.random() * 30) - 15; // -15 to 15
+            const randomX = Math.floor(2 * 30) - 15; // -15 to 15
             sticker.style.transform = `translateX(${randomX}%)`;
         }
 
@@ -269,6 +276,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add floating animation to all stickers
     const stickers = document.querySelectorAll('.floating-sticker');
     stickers.forEach((sticker, index) => {
+        // Add z-index to individual stickers as well
+        sticker.style.zIndex = '1000';
+        sticker.style.position = 'absolute';
+
         // Different animation delay for each sticker
         const delay = index * 0.5;
         sticker.style.animationDelay = `${delay}s`;
