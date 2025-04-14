@@ -194,7 +194,8 @@ nav {
 }
 
 .about-img {
-    flex: 1;
+    flex: 0 0 300px; /* Reduce from flex: 1 to a fixed width */
+    max-width: 300px; /* Add max-width to ensure consistency */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);

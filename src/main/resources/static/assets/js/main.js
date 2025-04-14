@@ -134,6 +134,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create sticker elements and insert them between sections
     const sections = document.querySelectorAll('section');
 
+    const butterflyPngImages = [
+        'assets/images/butterfly1.png',
+        'assets/images/butterfly2.png'
+    ];
+
     // Sticker designs - SVG paths for various African and literary-inspired elements
     // Now with outlines instead of fills
     const stickerDesigns = [
