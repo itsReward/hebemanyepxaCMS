@@ -895,7 +895,7 @@ body {
 }
 
 h1 {
-    font-family: 'Dearjoe 6', 'Roboto', sans-serif;
+    font-family: 'Dearjoe 6', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
@@ -970,8 +970,9 @@ p, li, a {
     font-family: 'Dearjoe 6 ';
     src: url('../fonts/dearjoe 6/dearJoe 6.woff2') format('woff2'),
     url('../fonts/dearjoe 6/dearJoe 6.woff') format('woff');
+    url('../fonts/dearjoe 6/dearJoe 6.otf') format('opentype');
     font-weight: 300;
-    font-style: italic;
+    font-style: normal;
 }
 
 /* Fallback Fonts */
