@@ -172,6 +172,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   stroke="#8B5A2B" stroke-width="1.5" fill="none"/>
         </svg>`,
 
+        // Butterfly 1 - elegant outlined butterfly
+        `<svg viewBox="0 0 100 100" class="floating-sticker">
+            <path d="M50,30 C60,10 80,20 70,40 C80,50 80,70 60,65 C55,75 45,75 40,65 C20,70 20,50 30,40 C20,20 40,10 50,30" 
+                  fill="none" stroke="#CD853F" stroke-width="1.5"/>
+            <path d="M50,30 L50,65" stroke="#8B5A2B" stroke-width="1"/>
+            <path d="M45,35 C40,25 55,25 55,35" fill="none" stroke="#8B5A2B" stroke-width="1"/>
+            <path d="M42,28 C45,25 55,25 58,28" fill="none" stroke="#CD853F" stroke-width="1"/>
+        </svg>`,
+
         // Baobab tree - outlined
         `<svg viewBox="0 0 100 100" class="floating-sticker">
             <path d="M50,20 c-10,0 -20,10 -20,20 c0,10 5,15 5,30 l30,0 c0,-15 5,-20 5,-30 c0,-10 -10,-20 -20,-20z" 
@@ -184,12 +193,36 @@ document.addEventListener('DOMContentLoaded', function() {
                   fill="none" stroke="#CD853F" stroke-width="1.5"/>
         </svg>`,
 
+        // Butterfly 2 - different style butterfly
+        `<svg viewBox="0 0 100 100" class="floating-sticker">
+            <path d="M50,25 C30,15 15,40 35,50 C15,60 30,85 50,75 C70,85 85,60 65,50 C85,40 70,15 50,25Z" 
+                  fill="none" stroke="#8B5A2B" stroke-width="1.5"/>
+            <path d="M50,35 L50,65" stroke="#CD853F" stroke-width="2"/>
+            <path d="M45,30 S50,25 55,30" stroke="#CD853F" stroke-width="1"/>
+            <ellipse cx="40" cy="40" rx="5" ry="3" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,1"/>
+            <ellipse cx="60" cy="40" rx="5" ry="3" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,1"/>
+            <ellipse cx="40" cy="60" rx="5" ry="3" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,1"/>
+            <ellipse cx="60" cy="60" rx="5" ry="3" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,1"/>
+        </svg>`,
+
         // African pattern element - already outlined
         `<svg viewBox="0 0 100 100" class="floating-sticker">
             <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#8B5A2B" stroke-width="2"/>
             <path d="M35,35 L65,35 L65,65 L35,65 Z" fill="none" stroke="#CD853F" stroke-width="2"/>
             <path d="M20,20 L35,35 M80,20 L65,35 M20,80 L35,65 M80,80 L65,65" stroke="#D2B48C" stroke-width="2"/>
             <circle cx="50" cy="50" r="5" fill="none" stroke="#8B5A2B" stroke-width="2"/>
+        </svg>`,
+
+        // Butterfly 3 - simple butterfly with pattern
+        `<svg viewBox="0 0 100 100" class="floating-sticker">
+            <path d="M50,20 C35,5 10,25 30,45 C10,65 35,85 50,70 C65,85 90,65 70,45 C90,25 65,5 50,20Z" 
+                  fill="none" stroke="#CD853F" stroke-width="1.5"/>
+            <path d="M50,30 L50,70" stroke="#8B5A2B" stroke-width="1.5"/>
+            <path d="M35,35 C40,30 45,25 50,35 C55,25 60,30 65,35" fill="none" stroke="#D2B48C" stroke-width="1"/>
+            <path d="M30,40 C40,35 45,45 40,55" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,2"/>
+            <path d="M70,40 C60,35 55,45 60,55" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="2,2"/>
+            <circle cx="45" cy="40" r="2" fill="none" stroke="#8B5A2B" stroke-width="1"/>
+            <circle cx="55" cy="40" r="2" fill="none" stroke="#8B5A2B" stroke-width="1"/>
         </svg>`,
 
         // Adinkra symbol - new outlined sticker
@@ -207,6 +240,18 @@ document.addEventListener('DOMContentLoaded', function() {
             <path d="M65,75 c0,0 10,5 10,-5 c0,-10 -10,-15 -10,-5 c0,10 10,15 10,5" 
                   fill="none" stroke="#CD853F" stroke-width="2"/>
             <ellipse cx="65" cy="80" rx="15" ry="5" fill="none" stroke="#8B5A2B" stroke-width="2"/>
+        </svg>`,
+
+        // Butterfly 4 - decorative butterfly with curved wings
+        `<svg viewBox="0 0 100 100" class="floating-sticker">
+            <path d="M50,25 C40,15 20,20 25,40 C15,50 20,70 40,65 C45,75 55,75 60,65 C80,70 85,50 75,40 C80,20 60,15 50,25" 
+                  fill="none" stroke="#8B5A2B" stroke-width="1.5"/>
+            <path d="M50,35 L50,65" stroke="#CD853F" stroke-width="1.5"/>
+            <path d="M35,35 Q50,25 65,35" stroke="#D2B48C" stroke-width="1"/>
+            <path d="M35,65 Q50,75 65,65" stroke="#D2B48C" stroke-width="1"/>
+            <path d="M45,30 S50,28 55,30" stroke="#CD853F" stroke-width="1"/>
+            <circle cx="35" cy="40" r="3" fill="none" stroke="#CD853F" stroke-width="1" stroke-dasharray="1,1"/>
+            <circle cx="65" cy="40" r="3" fill="none" stroke="#CD853F" stroke-width="1" stroke-dasharray="1,1"/>
         </svg>`
     ];
 
