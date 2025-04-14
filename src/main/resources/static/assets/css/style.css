@@ -67,7 +67,7 @@ nav {
 }
 
 .logo {
-    font-family: san-brainy, fantasy;
+    font-family: Dearjoe6, fantasy;
     font-size: 26px;
     font-weight: 500;
     color: var(--light-color);
@@ -148,6 +148,7 @@ nav {
 }
 
 .hero h1 {
+    font-family: 'Dearjoe6', 'Roboto', sans-serif;
     font-size: 4rem;
     margin-bottom: 20px;
     animation: fadeInDown 1.5s;
@@ -895,14 +896,14 @@ body {
 }
 
 h1 {
-    font-family: 'Dearjoe 6', sans-serif;
+    font-family: 'Dearjoe6', 'Roboto', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
 
 
 h2, h3, h4, h5, h6 {
-    font-family: 'Jacques Display', 'Roboto', sans-serif;
+    font-family: 'Dearjoe6', 'Roboto', sans-serif;
     font-weight: 200;
     letter-spacing: 1px;
 }
@@ -915,7 +916,7 @@ p, li, a {
 }
 
 .main-nav {
-    font-family: 'Dearjoe 6', 'Roboto', sans-serif;
+    font-family: 'Dearjoe6', 'Roboto', sans-serif;
     font-weight: 300;
 }
 
@@ -967,12 +968,13 @@ p, li, a {
 }
 
 @font-face {
-    font-family: 'Dearjoe 6 ';
-    src: url('../fonts/dearjoe 6/dearJoe 6.woff2') format('woff2'),
-    url('../fonts/dearjoe 6/dearJoe 6.woff') format('woff');
-    url('../fonts/dearjoe 6/dearJoe 6.otf') format('opentype');
+    font-family: 'Dearjoe6';  /* Remove the space at the end */
+    src: url('../fonts/dearjoe6/dearJoe6.woff2') format('woff2'),
+    url('../fonts/dearjoe6/dearJoe6.woff') format('woff'),
+    url('../fonts/dearjoe6/dearJoe6.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
+    font-display: swap;
 }
 
 /* Fallback Fonts */
