@@ -842,11 +842,19 @@ footer {
     width: 100px; /* Maintain your desired size */
     height: auto;
     position: absolute;
-    left: 50%;
+    /* Removed the centered positioning (left: 50%, transform: translateX(-50%)) */
     top: 10px;
-    transform: translateX(-50%);
     animation: float 4s ease-in-out infinite;
     filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Add these rules to create alternating positions */
+.sticker-container:nth-child(odd) .floating-sticker {
+    left: 15%; /* Position on the left side */
+}
+
+.sticker-container:nth-child(even) .floating-sticker {
+    right: 15%; /* Position on the right side */
 }
 
 /* Add some variations */

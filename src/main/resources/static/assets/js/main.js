@@ -136,8 +136,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const butterflyPngImages = [
         'assets/images/butterfly1.png',
-        'assets/images/butterfly2.png'
+        'assets/images/butterfly2.png',
+        'assets/images/butterfly3.png',
+        'assets/images/flower.png',
+        'assets/images/flower2.png',
+        'assets/images/flower3.png',
     ];
+
+    const flowerPngImages = [
+        'assets/images/flower.png',
+        'assets/images/flower2.png',
+        'assets/images/flower3.png',
+    ];
+
+    const flowerStickers = flowerPngImages.map(imgPath => {
+        return `<img src="${imgPath}" class="floating-sticker" style="width: 160px; height: auto;">`;
+    })
 
     // Sticker designs - SVG paths for various African and literary-inspired elements
     // Now with outlines instead of fills
@@ -217,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add butterfly SVGs to your sticker designs
     const butterflyStickers = [
-        // Butterfly SVG 1 - Now 4x larger
+        /*// Butterfly SVG 1 - Now 4x larger
         `<svg viewBox="0 0 400 400" class="floating-sticker">
                 <path d="M200,120 c40,-40 80,-60 120,-40 c20,20 20,60 0,80 c-40,40 -120,40 -120,40 c0,0 -80,0 -120,-40 c-20,-20 -20,-60 0,-80 c40,-20 80,0 120,40z" 
                       fill="none" stroke="#8B5A2B" stroke-width="8"/>
@@ -234,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <path d="M200,120 v160" stroke="#8B5A2B" stroke-width="4" stroke-dasharray="12,12"/>
                 <circle cx="200" cy="120" r="12" fill="none" stroke="#CD853F" stroke-width="6"/>
                 <circle cx="200" cy="280" r="12" fill="none" stroke="#CD853F" stroke-width="6"/>
-            </svg>`
+            </svg>`*/
     ];
 
 
@@ -246,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Combine all sticker designs
-    const allStickers = [...stickerDesigns, ...butterflyStickers];
+    const allStickers = [...butterflyStickers, ...flowerStickers];
 
     // Calculate total stickers needed
     const totalStickers = sections.length - 1;
@@ -280,14 +294,44 @@ document.addEventListener('DOMContentLoaded', function() {
         stickerContainer.style.position = 'relative';
         stickerContainer.style.zIndex = '1000';
         stickerContainer.style.overflow = 'visible';
+        stickerContainer.style.width = '100%';
 
-        // Use pre-prepared sticker from shuffled array
+        // Use pre-prepared sticker
         stickerContainer.innerHTML = stickersToPlace[i];
 
-        // ... [keep existing random positioning code] ...
+        // Get the sticker element
+        const sticker = stickerContainer.querySelector('.floating-sticker');
+        if (sticker) {
+            // Determine if we're placing on left or right side
+            const isLeft = i % 2 === 0;
+
+            // For maximum spread:
+            // Left side stickers: 2-40% from left
+            // Right side stickers: 60-98% from left (or 2-40% from right)
+            let leftPosition;
+            if (isLeft) {
+                leftPosition = Math.random() * 38 + 2; // 2-40% from left
+            } else {
+                leftPosition = Math.random() * 38 + 60; // 60-98% from left
+            }
+
+            // Random vertical offset
+            const randomY = Math.random() * 20 - 10; // -10% to 10%
+
+            // Random rotation
+            const randomRotate = Math.random() * 25 - 12.5; // -12.5 to +12.5 degrees
+
+            sticker.style.position = 'absolute';
+            sticker.style.left = `${leftPosition}%`;
+            sticker.style.top = `${randomY}%`;
+            sticker.style.transform = `translateY(-50%) rotate(${randomRotate}deg)`;
+            sticker.style.maxWidth = '120px'; // Prevent oversized stickers
+        }
 
         sections[i].after(stickerContainer);
     }
+
+
     // Add floating animation to all stickers
     const stickers = document.querySelectorAll('.floating-sticker');
     stickers.forEach((sticker, index) => {
